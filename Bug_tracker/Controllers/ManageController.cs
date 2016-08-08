@@ -332,21 +332,49 @@ namespace Bug_tracker.Controllers
 
             base.Dispose(disposing);
         }
-        //This is where I am trying to connect my new view of Change Username to the controller
+
+
+        
+        //
+        // GET: /Manage/ChangeUsername
+        public ActionResult ChangeUsername()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeUsername
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeUsername(ChangeUsernameViewModel model)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await UserManager.ChangeUsernameAsync(User.GetUserId(), model.NewUsername);
+                return View(model);
+            }
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                user.UserName = model.NewUsername;
+
+                var result = await UserManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                   
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    return RedirectToAction("Index");
                 }
-            }
+                    AddErrors(result);
+                    return View(model);
+            
+
+           
+           
         }
 
 #region Helpers
-        // Used for XSRF protection when adding external logins
+            // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
@@ -400,19 +428,3 @@ namespace Bug_tracker.Controllers
     }
 }
 
-//public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-//{
-//    if (ModelState.IsValid)
-//    {
-//        var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-//        if (result.Succeeded)
-//        {
-//            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-//            if (user != null)
-//            {
-//                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-//            }
-//            return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-//        }
-//        AddErrors(result);
-//    }

@@ -12,6 +12,7 @@ namespace Bug_tracker.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public string Username { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -90,8 +91,7 @@ namespace Bug_tracker.Models
         [Display(Name = "New Username")]
         public string NewUsername { get; set; }
    
-        [Display(Name = "Confirm new Username")]
-        public string ConfirmNewUsername { get; set; }
+        
      }
  }
     

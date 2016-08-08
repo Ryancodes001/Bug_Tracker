@@ -80,3 +80,8 @@ c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tr
 c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.csprojResolveAssemblyReference.cache
 c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.dll
 c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.pdb
+c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\SendGrid.dll
+c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\SendGrid.SmtpApi.dll
+c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\SendGridMail.dll
+c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\System.Net.Http.Formatting.dll
+c:\users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\System.Net.Http.Formatting.xml

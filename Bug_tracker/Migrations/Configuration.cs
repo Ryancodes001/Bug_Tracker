@@ -49,6 +49,10 @@ namespace Bug_tracker.Migrations
                     DisplayName = "RRousseau"
                 }, "E@gles1988");
             }
-        }
+
+                var userId = userManager.FindByEmail("rrousseau1988@gmail.com").Id;
+                userManager.AddToRole(userId, "Admin");
+        } 
+
     }
 }

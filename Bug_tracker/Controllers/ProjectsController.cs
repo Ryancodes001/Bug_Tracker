@@ -15,6 +15,7 @@ namespace Bug_tracker.Models.CodeFirst
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Projects
+        [Authorize(Roles = "Admin, Project Manager, Developer")]
         public ActionResult Index()
         {
             return View(db.Projects.ToList());
@@ -36,6 +37,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -59,6 +61,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)

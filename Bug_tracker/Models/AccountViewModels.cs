@@ -65,6 +65,21 @@ namespace Bug_tracker.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        //[StringLength(100, ErrorMessage = "The{0} must beat least {2} characters long.", MinimumLength = 0)]
+
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+        //[StringLength(100, ErrorMessage = "The{0} must beat least {2} characters long.", MinimumLength = 6)]
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

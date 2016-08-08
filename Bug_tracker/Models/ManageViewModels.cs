@@ -39,6 +39,7 @@ namespace Bug_tracker.Models
         public string ConfirmPassword { get; set; }
     }
 
+
     public class ChangePasswordViewModel
     {
         [Required]
@@ -83,4 +84,15 @@ namespace Bug_tracker.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
-}
+
+    public class ChangeUsernameViewModel
+    {
+        [Display(Name = "New Username")]
+        public string NewUsername { get; set; }
+   
+        [Display(Name = "Confirm new Username")]
+        public string ConfirmNewUsername { get; set; }
+     }
+ }
+    
+       

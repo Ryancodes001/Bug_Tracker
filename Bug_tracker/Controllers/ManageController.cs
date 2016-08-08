@@ -332,6 +332,18 @@ namespace Bug_tracker.Controllers
 
             base.Dispose(disposing);
         }
+        //This is where I am trying to connect my new view of Change Username to the controller
+        public async Task<ActionResult> ChangeUsername(ChangeUsernameViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var result = await UserManager.ChangeUsernameAsync(User.GetUserId(), model.NewUsername);
+                if (result.Succeeded)
+                {
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                }
+            }
+        }
 
 #region Helpers
         // Used for XSRF protection when adding external logins
@@ -387,3 +399,20 @@ namespace Bug_tracker.Controllers
 #endregion
     }
 }
+
+//public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
+//{
+//    if (ModelState.IsValid)
+//    {
+//        var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+//        if (result.Succeeded)
+//        {
+//            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+//            if (user != null)
+//            {
+//                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+//            }
+//            return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+//        }
+//        AddErrors(result);
+//    }

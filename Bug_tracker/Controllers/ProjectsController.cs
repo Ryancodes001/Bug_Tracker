@@ -18,7 +18,7 @@ namespace Bug_tracker.Models.CodeFirst
         [Authorize(Roles = "Admin, Project Manager, Developer")]
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            return View(db.Projects.ToList());//use this same code to grab all my users for admin dashboard "View(db.Users.ToList())"
         }
 
         // GET: Projects/Details/5

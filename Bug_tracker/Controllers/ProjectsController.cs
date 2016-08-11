@@ -15,7 +15,7 @@ namespace Bug_tracker.Models.CodeFirst
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Projects
-        [Authorize(Roles = "Admin, Project Manager, Developer")]
+        //[Authorize(Roles = "Admin, Project Manager, Developer")]
         public ActionResult Index()
         {
             return View(db.Projects.ToList());//use this same code to grab all my users for admin dashboard "View(db.Users.ToList())"

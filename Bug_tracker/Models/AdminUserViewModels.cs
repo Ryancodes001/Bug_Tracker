@@ -10,8 +10,10 @@ namespace Bug_tracker.Models
     {
         public ApplicationUser User { get; set; }
         public MultiSelectList Roles { get; set; }
-        public string[] SelectedRoles { get; set; }
-
+        public MultiSelectList AbsentRoles { get; set; }
+        public string[] SelectedCurrentRoles { get; set; }
+        public string[] SelectedAbsentRoles { get; set; }
+    
     }
 
     

@@ -17,7 +17,6 @@ namespace Bug_tracker.Models.CodeFirst
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; }
 
-
           
 
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }

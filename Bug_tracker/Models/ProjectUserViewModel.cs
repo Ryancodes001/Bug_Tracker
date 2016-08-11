@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bug_tracker.Models.CodeFirst;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,9 @@ namespace Bug_tracker.Models
     public class ProjectUserViewModel
     {
         public ApplicationUser User { get; set; }
-        public MultiSelectList Projects { get; set; }
-       
+        public Project Project { get; set; }
+        public MultiSelectList AssignedUserList { get; set; }
+        public MultiSelectList UnassignedUserList { get; set; }
+
     }
 }

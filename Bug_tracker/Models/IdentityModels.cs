@@ -18,7 +18,7 @@ namespace Bug_tracker.Models
         public ApplicationUser()      
          {
             this.Projects = new HashSet<Project>();
-        }
+         }
     public virtual ICollection<Project> Projects { get; set; }
 
 

@@ -38,7 +38,7 @@ namespace Bug_tracker.Helpers
             return projects; 
         }
 
-        //Check to see if a project is assigned to a user
+        //Assign a user to a project if not already assigned
         public void AssignUser(string userId, int projectId)
         {
             if (!HasProject(userId, projectId))
@@ -65,6 +65,20 @@ namespace Bug_tracker.Helpers
                 var project = db.Projects.Find(projectId);
                 project.ApplicationUsers.Remove(user);
             }
+        }
+        //Get a list of users NOT assigned to a given project
+        public List<ApplicationUser> UnassignedUsers(int projectId)
+        {
+            var users = db.Users.ToList();
+            var AbsentUserList = new List<ApplicationUser>();
+            foreach (var user in users)
+            {
+                if (!HasProject(user.Id, projectId))
+                {
+                    AbsentUserList.Add(user);
+                }
+            }
+            return AbsentUserList;
         }
 
     }

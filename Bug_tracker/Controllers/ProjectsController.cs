@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bug_tracker.Models;
+using Bug_tracker.Helpers;
 
 namespace Bug_tracker.Models.CodeFirst
 {
@@ -61,7 +62,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Edit/5
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -125,6 +126,23 @@ namespace Bug_tracker.Models.CodeFirst
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //GET Change User
+        //[Authorize (Roles = "Admin, Project Manager")]
+        public ActionResult ChangeUser(int id)
+        {
+            Project project = db.Projects.Find(id);
+            ProjectUserViewModel ProjectModel = new ProjectUserViewModel();
+            ProjectsHelper helper = new ProjectsHelper(db);
+            var assigned = helper.AssignedUser(id);
+            var remove = helper.RemoveUser(id);
+
+            ProjectModel.AssignedUserList = new MultiSelectList(assigned);
+            ProjectModel.UnassignedUserList = new MultiSelectList(remove);
+
+            return View(ProjectModel);
+            
         }
     }
 }

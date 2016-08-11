@@ -39,6 +39,13 @@ namespace Bug_tracker.Helpers
             return result.Succeeded;
         }
 
+        public bool RemoveUserFromRole (string userId, string roleName)
+        {
+            var result = userManager.RemoveFromRole(userId, roleName);
+            return result.Succeeded;
+        }
+
+
         public IList<ApplicationUser> UsersInRole(string roleName)
         {
             var userIDs = roleManager.FindByName(roleName).Users.Select(r => r.UserId);
@@ -48,6 +55,22 @@ namespace Bug_tracker.Helpers
         {
             var userIDs = System.Web.Security.Roles.GetUsersInRole(roleName);
             return userManager.Users.Where(u => !userIDs.Contains(u.Id)).ToList();
+        }
+
+        public IList<string> ListAbsentUserRoles(string userId)
+        {
+            var roles = db.Roles.Select(r => r.Name).ToList();
+            var AbsentUserRoles = new List<string>();
+            foreach (var role in roles)
+            {
+                if (!IsUserInRole(userId, role))
+                {
+                    AbsentUserRoles.Add(role);
+                }
+            }
+
+            return AbsentUserRoles;
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Bug_tracker.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string DisplayName { get; set; }
+        public string DisplayName { get { return FirstName + " " + LastName; } }
         public ApplicationUser()      
          {
             this.Projects = new HashSet<Project>();

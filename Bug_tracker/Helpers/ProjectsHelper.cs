@@ -17,14 +17,15 @@ namespace Bug_tracker.Helpers
         {
             this.userManager = new UserManager<ApplicationUser>(
                  new UserStore<ApplicationUser>(context));
+            this.db = context;
         }
        
         //check to see if a User has a project 
-        public bool HasProject(string userId, int projectId)
+        public bool HasProject(string userId, int? projectId)
         {
             var user = db.Users.Find(userId);
-            var projects = user.Projects.Where(n => n.Id == projectId);
-            if (projects ==null)
+            var projects = user.Projects.Where(n => n.Id == projectId).ToList();
+            if (!projects.Any())
             {
                 return false;
             }
@@ -39,7 +40,7 @@ namespace Bug_tracker.Helpers
         }
 
         //Assign a user to a project if not already assigned
-        public void AssignUser(string userId, int projectId)
+        public void AssignUser(string userId, int? projectId)
         {
             if (!HasProject(userId, projectId))
             {
@@ -49,7 +50,7 @@ namespace Bug_tracker.Helpers
             }
         }
         //List of users for a given project
-        public List<ApplicationUser> AssignedUser(int projectId)
+        public List<ApplicationUser> AssignedUser(int? projectId)
         {
             var project = db.Projects.Find(projectId);
             var users = project.ApplicationUsers.ToList();
@@ -57,7 +58,7 @@ namespace Bug_tracker.Helpers
             
         }
         //remove user from a project
-        public void RemoveUser(string userId, int projectId)
+        public void RemoveUser(string userId, int? projectId)
         {
             if (HasProject(userId, projectId))
             {
@@ -67,7 +68,7 @@ namespace Bug_tracker.Helpers
             }
         }
         //Get a list of users NOT assigned to a given project
-        public List<ApplicationUser> UnassignedUsers(int projectId)
+        public List<ApplicationUser> UnassignedUsers(int? projectId)
         {
             var users = db.Users.ToList();
             var AbsentUserList = new List<ApplicationUser>();

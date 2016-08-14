@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bug_tracker.Models;
 using Bug_tracker.Helpers;
+using Microsoft.AspNet.Identity;
 
 namespace Bug_tracker.Models.CodeFirst
 {
@@ -16,11 +17,38 @@ namespace Bug_tracker.Models.CodeFirst
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Projects
-        //[Authorize(Roles = "Admin, Project Manager, Developer")]
+        [Authorize(Roles = "Admin, Project Manager, Developer")]
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());//use this same code to grab all my users for admin dashboard "View(db.Users.ToList())"
+            UserRolesHelper rolesHelper = new UserRolesHelper(db);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var userRoles = rolesHelper.ListUserRoles(user.Id);
+            foreach (var r in userRoles)
+            {
+                if (r == "Admin")
+                {
+                    return View(db.Projects.ToList());
+                }
+                if ((r == "Project Manager") && (r == "Developer"))
+                {
+                    return View(user.Projects.ToList());
+                }
+                if (r == "Project Manager")
+                {
+                    return View(user.Projects.ToList());
+                }
+
+                if (r == "Developer")
+                {
+                    return View(user.Projects.ToList());
+                }
+            }
+
+            return RedirectToAction("Index");
         }
+
+
+
 
         // GET: Projects/Details/5
         public ActionResult Details(int? id)
@@ -129,20 +157,85 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         //GET Change User
-        //[Authorize (Roles = "Admin, Project Manager")]
-        public ActionResult ChangeUser(int id)
+        //[Authorize(Roles = "Admin, Project Manager")]
+
+        public ActionResult ChangeUser(int? id)
         {
-            Project project = db.Projects.Find(id);
+            var project = db.Projects.Find(id);
             ProjectUserViewModel ProjectModel = new ProjectUserViewModel();
             ProjectsHelper helper = new ProjectsHelper(db);
             var assigned = helper.AssignedUser(id);
-            var remove = helper.RemoveUser(id);
+            var unassigned = helper.UnassignedUsers(id);
 
-            ProjectModel.AssignedUserList = new MultiSelectList(assigned);
-            ProjectModel.UnassignedUserList = new MultiSelectList(remove);
+            ProjectModel.AssignedUserList = new MultiSelectList(assigned, "id", "DisplayName");
+            ProjectModel.UnassignedUserList = new MultiSelectList(unassigned, "id", "DisplayName");
+            ProjectModel.Project = project;
 
             return View(ProjectModel);
-            
+
         }
-    }
-}
+
+
+        // POST: Projects/ChangeUsers (ADD USER)
+        //[Authorize(Roles ="Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddUser(int AddUserProjectID, List<string> SelectedUnassignedUsers)
+        {
+            if (ModelState.IsValid)
+            {
+                //Instantiate the helper and find the user in the DB
+                ProjectsHelper helper = new ProjectsHelper(db);
+                var project = db.Projects.Find(AddUserProjectID);
+
+                //ADD NEW USER(S)
+                foreach (var u in SelectedUnassignedUsers)
+                {
+                    //If the user isn't assigned to this project
+                    if (!helper.HasProject(u, AddUserProjectID))
+                    {
+                        //Add the user to the project
+                        helper.AssignUser(u, AddUserProjectID);
+                    }
+                }
+
+                db.Entry(project).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(AddUserProjectID);
+        }
+
+
+        //POST: Projects/ChangeUsers(REMOVE USER)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveUser(int RemoveUserProjectID, List<string> SelectedAssignedUsers)
+        {
+            if (ModelState.IsValid)
+            {
+                //Instantiate the helper and find the user in the DB
+                ProjectsHelper helper = new ProjectsHelper(db);
+                var project = db.Projects.Find(RemoveUserProjectID);
+
+                //ADD NEW USER(S)
+                foreach (var u in SelectedAssignedUsers)
+                {
+                    //If the user isn't assigned to this project
+                    if (helper.HasProject(u, RemoveUserProjectID))
+                    {
+                        //Add the user to the project
+                        helper.RemoveUser(u, RemoveUserProjectID);
+                    }
+                }
+
+                db.Entry(project).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(RemoveUserProjectID);
+                }
+            }
+        }

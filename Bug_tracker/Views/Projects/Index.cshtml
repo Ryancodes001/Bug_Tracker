@@ -18,6 +18,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Updated)
         </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.ApplicationUsers)
         </th>
@@ -37,11 +38,19 @@
             @Html.DisplayFor(modelItem => item.Updated)
          </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUsers)
+            @foreach (var u in item.ApplicationUsers)
+            {
+                @u.DisplayName <br/>
+            } 
         </td>
-       
+        
+
+            
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, htmlAttributes: new { @class = "btn btn-primary" }) 
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, htmlAttributes: new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-info" })
+
+            
            
         </td>
     </tr>

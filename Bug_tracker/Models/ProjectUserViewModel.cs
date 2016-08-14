@@ -13,6 +13,7 @@ namespace Bug_tracker.Models
         public Project Project { get; set; }
         public MultiSelectList AssignedUserList { get; set; }
         public MultiSelectList UnassignedUserList { get; set; }
-
+        public string[] SelectedAssignedUsers { get; set; }
+        public string[] SelectedUnassignedUsers { get; set; }
     }
 }

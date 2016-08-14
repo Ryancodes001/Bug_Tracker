@@ -6,3 +6,29 @@
 
 <h2>Change User</h2>
 
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Current User(s)</h3>
+            @using (Html.BeginForm("RemoveUser", "Projects"))
+
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" value="@Model.Project.Id" name="RemoveUserProjectID" />
+                @Html.ListBox("SelectedAssignedUsers", Model.AssignedUserList, htmlAttributes: new { @class = "form-control" })
+                <input type="submit" class="btn btn-primary" value="Remove Selected User(s)"/>
+            }
+        </div>
+        <div class="col-md-6">
+            <h3>Available User(s)</h3>
+            @using (Html.BeginForm("AddUser", "Projects"))
+
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" value="@Model.Project.Id" name="AddUserProjectID" />
+                @Html.ListBox("SelectedUnassignedUsers", Model.UnassignedUserList, htmlAttributes: new { @class = "form-control" })
+
+                <input type="submit" class="btn btn-primary" value="Add Selected User(s)" />
+            }
+        </div>
+    </div>
+

@@ -20,8 +20,16 @@
         <th>
             @Html.DisplayFor(modelItem => item.Email)
         </th>
+       <th>
+           @*@foreach (var r in item.Roles)
+           {
+               @r.RoleId
+           }*@
+
+           @Html.DisplayFor(modelItem => item.Roles)
+       </th>
         <th>
-            @Html.ActionLink("Admin", "EditUser", new { id = item.Id })
+            @Html.ActionLink("Edit Role", "EditUser", new { id = item.Id })
         </th>
        
     </tr>

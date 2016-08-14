@@ -46,7 +46,7 @@ namespace Bug_tracker.Migrations
                     Email = "rrousseau1988@gmail.com",
                     FirstName = "Ryan",
                     LastName = "Rousseau",
-                    DisplayName = "RRousseau"
+                    //DisplayName = "RRousseau"
                 }, "E@gles1988");
             }
 

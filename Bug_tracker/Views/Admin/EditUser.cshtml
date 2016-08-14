@@ -20,7 +20,7 @@
 
                 <input type="hidden" value="@Model.User.Id" name="AddId" />
 
-                @Html.ListBox("SelectedAbsentRoles", Model.AbsentRoles)
+                @Html.ListBox("SelectedAbsentRoles", Model.AbsentRoles, htmlAttributes: new { @class = "form-control" })
 
                 <input type="submit" class="btn btn-primary" value="AddRole" name="AddRole" />
             }
@@ -35,7 +35,7 @@
                 <input type="hidden" value="@Model.User.Id" name="RemoveId" />
 
 
-                @Html.ListBox("SelectedCurrentRoles", Model.Roles)
+                @Html.ListBox("SelectedCurrentRoles", Model.Roles, htmlAttributes: new { @class = "form-control" })
 
                 <input type="submit" class="btn btn-primary" value="Remove Role" name="RemoveRole" />
             }

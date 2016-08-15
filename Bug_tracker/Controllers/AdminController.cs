@@ -14,6 +14,7 @@ namespace Bug_tracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminDashboard
+        [Authorize]
         public ActionResult AdminDashboard()
         {
             return View(db.Users.ToList());

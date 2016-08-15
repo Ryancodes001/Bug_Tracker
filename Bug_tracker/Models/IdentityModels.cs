@@ -47,5 +47,6 @@ namespace Bug_tracker.Models
             return new ApplicationDbContext();
         }
             public DbSet<Project> Projects { get; set; }
-}
+            public DbSet<Ticket> Tickets { get; set; }
+    }
 }

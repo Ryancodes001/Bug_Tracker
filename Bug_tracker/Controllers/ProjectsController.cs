@@ -81,6 +81,8 @@ namespace Bug_tracker.Models.CodeFirst
         {
             if (ModelState.IsValid)
             {
+                project.Updated = DateTimeOffset.Now;
+                project.Created = DateTimeOffset.Now;
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -10,8 +10,10 @@ namespace Bug_tracker.Models.CodeFirst
         public Project()
         {
             this.ApplicationUsers = new HashSet<ApplicationUser>();
+            this.Tickets = new HashSet<Ticket>();
         } 
 
+       
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTimeOffset Created { get; set; }
@@ -20,7 +22,7 @@ namespace Bug_tracker.Models.CodeFirst
           
 
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
-
+        public virtual ICollection<Ticket> Tickets { get; set; }
 
     }
 }

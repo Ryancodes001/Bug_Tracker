@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Bug_tracker.Models.ApplicationUser>
+
+
+<h2>Admin Dashboard</h2>
+
+
+
+
+
+<table class="table table-bordered">
+  @foreach (var item in Model)
+  {
+   <tr>
+        <th>
+            @Html.DisplayFor(modelItem => item.FirstName )
+        </th> 
+        <th>
+            @Html.DisplayFor(modelItem => item.LastName )
+        </th>
+        <th>
+            @Html.DisplayFor(modelItem => item.Email)
+        </th>
+       <th>
+           @*@foreach (var r in item.Roles)
+           {
+               @r.RoleId
+           }*@
+
+           @Html.DisplayFor(modelItem => item.Roles)
+       </th>
+        <th>
+            @Html.ActionLink("Edit Role", "EditUser", new { id = item.Id })
+        </th>
+       
+    </tr>
+  }
+</table>

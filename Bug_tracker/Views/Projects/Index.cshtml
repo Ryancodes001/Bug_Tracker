@@ -51,14 +51,17 @@
                 }
             </td>
             <td>
-               Tickets
+               @foreach (var t in item.Tickets)
+               {
+                   @Html.ActionLink(t.Title, "Details", "Tickets", new { id = t.Id }, htmlAttributes: new { @class = "text-color: Green;" }) <br/>
+               }
             </td>
+                    
 
-
-            <td>
+            <td>|
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
                 @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
+               @* @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })*@
 
 
 

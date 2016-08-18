@@ -236,6 +236,7 @@
     <Compile Include="Models\AdminUserViewModels.cs" />
     <Compile Include="Models\CodeFirst\TicketAttachment.cs" />
     <Compile Include="Models\CodeFirst\TicketComment.cs" />
+    <Compile Include="Controllers\TicketCommentsController.cs" />
     <Compile Include="Models\CodeFirst\TicketPriority.cs" />
     <Compile Include="Models\CodeFirst\Project.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -559,6 +560,11 @@
     <Content Include="Views\Tickets\Details.cshtml" />
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Tickets\Index.cshtml" />
+    <Content Include="Views\TicketComments\Create.cshtml" />
+    <Content Include="Views\TicketComments\Delete.cshtml" />
+    <Content Include="Views\TicketComments\Details.cshtml" />
+    <Content Include="Views\TicketComments\Edit.cshtml" />
+    <Content Include="Views\TicketComments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

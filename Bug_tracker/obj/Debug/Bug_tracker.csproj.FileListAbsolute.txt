@@ -40,6 +40,8 @@ C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tr
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Newtonsoft.Json.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Owin.dll
+C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.dll
+C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.Mvc.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\SendGrid.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\SendGrid.SmtpApi.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\SendGridMail.dll
@@ -59,6 +61,8 @@ C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tr
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Microsoft.ApplicationInsights.xml
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Newtonsoft.Json.xml
+C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.xml
+C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.Mvc.xml
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\System.Net.Http.Formatting.xml
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\System.Web.Helpers.xml
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\System.Web.Mvc.xml
@@ -84,4 +88,4 @@ C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tr
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.pdb
-C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.csprojResolveAssemblyReference.cache
+C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Debug\Bug_tracker.csprojResolveAssemblyReference.cache

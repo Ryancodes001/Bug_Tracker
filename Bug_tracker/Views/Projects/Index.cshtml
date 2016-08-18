@@ -5,60 +5,73 @@
 }
 
 <h2>Project Index</h2>
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+</div>
+<table class="table table-bordered myTable">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Updated
+            </th>
+
+            <th>
+                Assigned to
+            </th>
+            <th>
+                Tickets
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @foreach (var u in item.ApplicationUsers)
+                {
+                    @u.DisplayName <br />
+                }
+            </td>
+            <td>
+               Tickets
+            </td>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
-        </th>
-       
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUsers)
-        </th>
-        
-        <th></th>
-    </tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Updated)
-         </td>
-        <td>
-            @foreach (var u in item.ApplicationUsers)
-            {
-                @u.DisplayName <br/>
-            } 
-        </td>
-        
 
-            
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, htmlAttributes: new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-info" })
 
-            
-           
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
+</tbody>
 
 </table>
 <p>
-@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-success" } )
+@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-info btn-lg" } )
 </p>
 
-
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+</div>

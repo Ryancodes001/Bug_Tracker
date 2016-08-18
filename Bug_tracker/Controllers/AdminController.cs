@@ -14,7 +14,7 @@ namespace Bug_tracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AdminDashboard
-        [Authorize]
+        //[Authorize]
         public ActionResult AdminDashboard()
         {
             return View(db.Users.ToList());
@@ -23,7 +23,7 @@ namespace Bug_tracker.Controllers
 
 
         //GET Admin/EditUser
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult EditUser(string id)
         {
             var user = db.Users.Find(id);
@@ -39,7 +39,7 @@ namespace Bug_tracker.Controllers
         }
 
         // POST: Add User Role
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddRole(string AddId, List<string> SelectedAbsentRoles)
         {
@@ -61,7 +61,7 @@ namespace Bug_tracker.Controllers
         }
 
         // POST: Remove User Role
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult RemoveRole(string RemoveId, List<string> SelectedCurrentRoles)
         {

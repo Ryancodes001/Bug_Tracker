@@ -10,7 +10,7 @@ using Bug_tracker.Models;
 
 namespace Bug_tracker.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

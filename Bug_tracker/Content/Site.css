@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.resize {
+    height: auto;
+    width: 100%;
+
+}

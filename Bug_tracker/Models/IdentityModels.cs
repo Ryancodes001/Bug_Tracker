@@ -14,7 +14,7 @@ namespace Bug_tracker.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string DisplayName { get { return FirstName + " " + LastName; } }
+        public string DisplayName { get  { return FirstName + " " + LastName; } }
         public ApplicationUser()      
          {
             this.Projects = new HashSet<Project>();
@@ -48,5 +48,14 @@ namespace Bug_tracker.Models
         }
             public DbSet<Project> Projects { get; set; }
             public DbSet<Ticket> Tickets { get; set; }
+            public DbSet<TicketPriority> TicketPriority { get; set; }
+            public DbSet<TicketType> TicketType { get; set; }
+            public DbSet<TicketStatus> TicketStatus { get; set; }
+            public DbSet<TicketComment> TicketComments { get; set; }
+            public DbSet<TicketAttachment> TicketAttachments { get; set; }
+            public DbSet<TicketHistory> TicketHistory { get; set; }
+            
+
+
     }
 }

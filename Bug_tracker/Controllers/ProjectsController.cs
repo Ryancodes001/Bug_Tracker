@@ -17,36 +17,25 @@ namespace Bug_tracker.Models.CodeFirst
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Projects
-        [Authorize(Roles = "Admin, Project Manager, Developer")]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         public ActionResult Index()
         {
             UserRolesHelper rolesHelper = new UserRolesHelper(db);
             var user = db.Users.Find(User.Identity.GetUserId());
             var userRoles = rolesHelper.ListUserRoles(user.Id);
-            foreach (var r in userRoles)
+
+            if (userRoles.Contains("Admin"))
             {
-                if (r == "Admin")
-                {
-                    return View(db.Projects.ToList());
-                }
-                if ((r == "Project Manager") && (r == "Developer"))
-                {
-                    return View(user.Projects.ToList());
-                }
-                if (r == "Project Manager")
-                {
-                    return View(user.Projects.ToList());
-                }
-
-                if (r == "Developer")
-                {
-                    return View(user.Projects.ToList());
-                }
+                return View(db.Projects.ToList());
             }
-
+            if (userRoles.Contains("Project Manager") || (userRoles.Contains("Developer")) || (userRoles.Contains("Submitter")))
+            {
+                return View(user.Projects.ToList());
+            }
             return RedirectToAction("Index");
         }
 
+            
 
 
 
@@ -66,7 +55,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();

@@ -10,12 +10,12 @@ namespace Bug_tracker.Models.CodeFirst
     {
         public int Id { get; set; }
         public int TicketId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Description { get; set; }
         public DateTimeOffset Created { get; set; }
-        public string FileUrl { get; set; }
         public string FilePath { get; set; }
 
-        public virtual Ticket Tickets { get; set; }
+        public virtual Ticket Ticket { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

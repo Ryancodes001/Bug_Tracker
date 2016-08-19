@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bug_tracker.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bug_tracker.Models.CodeFirst
 {
@@ -14,10 +15,13 @@ namespace Bug_tracker.Models.CodeFirst
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+       //public Ticket ticket = new Ticket();
+
+
         // GET: TicketComments
         public ActionResult Index()
         {
-            var ticketComments = db.TicketComments.Include(t => t.Tickets);
+            var ticketComments = db.TicketComments.Include(t => t.Ticket);
             return View(ticketComments.ToList());
         }
 
@@ -37,9 +41,10 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: TicketComments/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
+            ViewBag.TicketId = id;
             return View();
         }
 
@@ -50,21 +55,20 @@ namespace Bug_tracker.Models.CodeFirst
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Body,Created")] TicketComment ticketComment)
         {
-            Ticket ticket = new Ticket();
-            ApplicationUser user = new ApplicationUser();
+            
+            
 
             if (ModelState.IsValid)
             {
-                //ticketComment.UserId = user.DisplayName; this needs fixing
-                ticketComment.TicketId = ticket.Id;
+                ticketComment.UserId = User.Identity.GetUserId();
                 ticketComment.Created = DateTimeOffset.Now;
                 db.TicketComments.Add(ticketComment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
-            return View(ticketComment);
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
+           return RedirectToAction("Ticket");
         }
 
         // GET: TicketComments/Edit/5

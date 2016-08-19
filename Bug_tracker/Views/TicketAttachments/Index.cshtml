@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bug_tracker.Models.CodeFirst.TicketComment>
+﻿@model IEnumerable<Bug_tracker.Models.CodeFirst.TicketAttachment>
 
 @{
     ViewBag.Title = "Index";
@@ -15,13 +15,16 @@
             @Html.DisplayNameFor(model => model.Ticket.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.User.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Body)
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilePath)
         </th>
         <th></th>
     </tr>
@@ -32,13 +35,16 @@
             @Html.DisplayFor(modelItem => item.Ticket.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @Html.DisplayFor(modelItem => item.User.FirstName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Body)
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FilePath)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

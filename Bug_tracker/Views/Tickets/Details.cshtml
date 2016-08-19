@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Title</h2>
 
 <div>
     <h4>Ticket</h4>
@@ -92,14 +92,24 @@
 
     </dl>
 </div>
+<h4>Ticket Comments</h4>
+@Html.ActionLink("Leave a Comment", "Create", "TicketComments", new { id = Model.Id }, null) 
 <div>
     @foreach (var c in Model.TicketComments)
     {
         @c.Body <br/>
     }
 </div>
+<h4>Ticket Attachments</h4>
+@Html.ActionLink("Leave an Attachment", "Create", "TicketAttachments", new { id = Model.Id }, null) 
+<div>
+    @foreach (var a in Model.TicketAttachments)
+    {
+        @a.FilePath <br />
+    }
+</div>
+<br/>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Leave a Comment", "Create", "TicketComments", new { id = Model.Id})
     @Html.ActionLink("Back to List", "Index")
 </p>

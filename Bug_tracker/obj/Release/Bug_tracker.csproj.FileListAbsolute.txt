@@ -85,3 +85,7 @@ C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tr
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Bug_tracker.csprojResolveAssemblyReference.cache
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Bug_tracker.dll
 C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Bug_tracker.pdb
+C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.dll
+C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.Mvc.dll
+C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.xml
+C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\bin\PagedList.Mvc.xml

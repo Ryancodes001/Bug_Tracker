@@ -11,6 +11,7 @@ using Bug_tracker.Models.CodeFirst;
 using Microsoft.AspNet.Identity;
 using System.IO;
 
+
 namespace Bug_tracker
 {
     public class TicketAttachmentsController : Controller
@@ -53,22 +54,35 @@ namespace Bug_tracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Description,Created,FilePath")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Description,Created,FilePath")] TicketAttachment ticketAttachment, HttpPostedFileBase fileUpload)
         {
             //This is where I need to set the code for bringing my attachments into my ticket
 
-            //if (image != null && image.ContentLength > 0)
-            //{
-            //    //check the file name to make sure its an image
-            //    var ext = Path.GetExtension(image.FileName).ToLower();
-            //    if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp" )
-            //        ModelState.AddModelError("image", "Invalid Format.");
-            //}
+            if (fileUpload != null && fileUpload.ContentLength > 0)
+            {
+                //check the file name to make sure its an image
+                var ext = Path.GetExtension(fileUpload.FileName ).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp" && ext != ".pdf" && ext != ".doc" && ext != ".docx")
+                    ModelState.AddModelError("fileUpload", "Invalid Format.");
+            }
 
 
 
             if (ModelState.IsValid)
             {
+
+                if (fileUpload != null)
+                {
+                    //relative server path
+                    var filePath = "/Uploads/";
+                    // path on physical drive on server
+                    var absPath = Server.MapPath("~" + filePath);
+                    // media url for relative path
+                    ticketAttachment.FilePath = filePath + fileUpload.FileName;
+                    //save image
+                    fileUpload.SaveAs(Path.Combine(absPath, fileUpload.FileName));
+                }
+
                 ticketAttachment.UserId = User.Identity.GetUserId();
                 ticketAttachment.Created = DateTimeOffset.Now;
                 db.TicketAttachments.Add(ticketAttachment);

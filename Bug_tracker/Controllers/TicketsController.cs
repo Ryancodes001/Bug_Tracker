@@ -103,8 +103,6 @@ namespace BugTracker.Controllers
 
             //if User is assigned to project, then he can make a ticket for that project;
             ViewBag.ProjectId = new SelectList(helper.AssignedProjects(user.Id), "Id", "Title");
-
-
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name");
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name");
@@ -119,6 +117,9 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,Description,Created,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId")] Ticket ticket)
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ProjectsHelper helper = new ProjectsHelper(db);
+
             if (ModelState.IsValid)
             {
                 ticket.OwnerUserId = User.Identity.GetUserId();
@@ -131,7 +132,8 @@ namespace BugTracker.Controllers
 
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.OwnerUserId);
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Title", ticket.ProjectId);
+            //if User is assigned to project, then he can make a ticket for that project;
+            ViewBag.ProjectId = new SelectList(helper.AssignedProjects(user.Id), "Id", "Title", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
@@ -143,6 +145,8 @@ namespace BugTracker.Controllers
         [Authorize(Roles ="Project Manager, Developer")]
         public ActionResult Edit(int? id)
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ProjectsHelper helper = new ProjectsHelper(db);
             UserRolesHelper userRoles = new UserRolesHelper(db);
             //var devUsers = userRoles.UsersInRole("Developer");
 
@@ -157,9 +161,9 @@ namespace BugTracker.Controllers
             }
             //This line specifies the users that are in the role of Developer- only developers can be assigned to a ticket
             ViewBag.AssignedToUserId = new SelectList(userRoles.UsersInRole("Developer"), "Id", "DisplayName", ticket.AssignedToUserId);
-
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.OwnerUserId);
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Title", ticket.ProjectId);
+            //if User is assigned to project, then he can make a ticket for that project;
+            ViewBag.ProjectId = new SelectList(helper.AssignedProjects(user.Id), "Id", "Title", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
@@ -174,6 +178,10 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId")] Ticket ticket)
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ProjectsHelper helper = new ProjectsHelper(db);
+            UserRolesHelper userRoles = new UserRolesHelper(db);
+
             if (ModelState.IsValid)
             {
                 ticket.Updated = DateTimeOffset.Now;
@@ -181,9 +189,10 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.AssignedToUserId);
+            ViewBag.AssignedToUserId = new SelectList(userRoles.UsersInRole("Developer"), "Id", "DisplayName", ticket.AssignedToUserId);
             //ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.OwnerUserId);
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Title", ticket.ProjectId);
+            //if User is assigned to project, then he can make a ticket for that project;
+            ViewBag.ProjectId = new SelectList(helper.AssignedProjects(user.Id), "Id", "Title", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);

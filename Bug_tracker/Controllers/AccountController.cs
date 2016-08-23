@@ -91,6 +91,7 @@ namespace Bug_tracker.Controllers
                     return View(model);
             }
         }
+       
 
         //
         // GET: /Account/VerifyCode

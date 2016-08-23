@@ -100,8 +100,9 @@
         @c.Body <br/>
     }
 </div>
-<h4>Ticket Attachments</h4> </br>
+<h4>Ticket Attachments</h4> 
 @Html.ActionLink("Leave an Attachment", "Create", "TicketAttachments", new { id = Model.Id }, null) 
+<br/>
 <div>
         @foreach (var a in Model.TicketAttachments)
         {
@@ -110,6 +111,10 @@
 </div>
 <br/>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+   
+   
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) 
+    
+
+        @Html.ActionLink("Back to List", "Index")
 </p>

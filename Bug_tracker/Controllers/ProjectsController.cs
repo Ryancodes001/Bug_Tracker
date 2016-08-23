@@ -55,7 +55,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Create
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult Create()
         {
             return View();
@@ -81,7 +81,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Edit/5
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -114,43 +114,43 @@ namespace Bug_tracker.Models.CodeFirst
             return View(project);
         }
 
-        // GET: Projects/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Project project = db.Projects.Find(id);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            return View(project);
-        }
+        //// GET: Projects/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Project project = db.Projects.Find(id);
+        //    if (project == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(project);
+        //}
 
-        // POST: Projects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: Projects/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Project project = db.Projects.Find(id);
+        //    db.Projects.Remove(project);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         //GET Change User
-        //[Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin, Project Manager")]
 
         public ActionResult ChangeUser(int? id)
         {
@@ -160,6 +160,7 @@ namespace Bug_tracker.Models.CodeFirst
             var assigned = helper.AssignedUser(id);
             var unassigned = helper.UnassignedUsers(id);
 
+          
             ProjectModel.AssignedUserList = new MultiSelectList(assigned, "id", "DisplayName");
             ProjectModel.UnassignedUserList = new MultiSelectList(unassigned, "id", "DisplayName");
             ProjectModel.Project = project;
@@ -169,8 +170,8 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
 
-        // POST: Projects/ChangeUsers (ADD USER)
-        //[Authorize(Roles ="Admin")]
+        // POST: Projects/ChangeUsers (ADD USER) ---check SRS if these permissions are correct
+        [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddUser(int AddUserProjectID, List<string> SelectedUnassignedUsers)

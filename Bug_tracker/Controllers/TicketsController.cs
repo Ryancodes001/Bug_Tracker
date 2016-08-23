@@ -50,26 +50,61 @@ namespace BugTracker.Controllers
         }
 
         // GET: Tickets/Details/5
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         public ActionResult Details(int? id)
-        {
+          {
+            //Find the user, roles, and ticket Id
+            UserRolesHelper rolesHelper = new UserRolesHelper(db);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var userRoles = rolesHelper.ListUserRoles(user.Id);
+            Ticket ticket = db.Tickets.Find(id);
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = db.Tickets.Find(id);
+            //Ticket ticket = db.Tickets.Find(id);
             if (ticket == null)
             {
                 return HttpNotFound();
             }
-            return View(ticket);
+
+            //If user is submitter or developer related to ticket, return that ticket
+            if (user.Id == ticket.AssignedToUserId || user.Id == ticket.OwnerUserId)
+            {
+                return View(ticket);
+            }
+            //if user is Admin, return the view
+            if (userRoles.Contains("Admin"))
+            {
+                return View(ticket);
+            }
+            //if user is project manager for this ticket, return the view 
+            if (ticket.Project.ApplicationUsers.Contains(user))
+            {
+                return View(ticket);
+            }
+                
+
+            return RedirectToAction("Login", "Account");
+
         }
+        
 
         // GET: Tickets/Create
+        [Authorize(Roles = "Submitter")]
         public ActionResult Create()
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ProjectsHelper helper = new ProjectsHelper(db);
+
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "DisplayName");
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName");
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Title");
+
+            //if User is assigned to project, then he can make a ticket for that project;
+            ViewBag.ProjectId = new SelectList(helper.AssignedProjects(user.Id), "Id", "Title");
+
+
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name");
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name");
@@ -105,8 +140,12 @@ namespace BugTracker.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [Authorize(Roles ="Project Manager, Developer")]
         public ActionResult Edit(int? id)
         {
+            UserRolesHelper userRoles = new UserRolesHelper(db);
+            //var devUsers = userRoles.UsersInRole("Developer");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -116,7 +155,9 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.AssignedToUserId);
+            //This line specifies the users that are in the role of Developer- only developers can be assigned to a ticket
+            ViewBag.AssignedToUserId = new SelectList(userRoles.UsersInRole("Developer"), "Id", "DisplayName", ticket.AssignedToUserId);
+
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Title", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name", ticket.TicketPriorityId);
@@ -128,6 +169,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Project Manager, Developer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId")] Ticket ticket)

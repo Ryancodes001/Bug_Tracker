@@ -42,9 +42,9 @@
        <td>
            @foreach (var r in item.Roles)
            {
-              @r.RoleId
+              @*@r.RoleId*@
 
-               @*if (r.RoleId.Equals("9af08240-ae18-492f-af51-d88a1d3bc0d8"))
+               if (r.RoleId.Equals("9af08240-ae18-492f-af51-d88a1d3bc0d8"))
                {
                 <p>Admin</p>
                }
@@ -59,11 +59,11 @@
                if (r.RoleId.Equals("f30bf2cc-897e-4983-b712-99534f2adf9e"))
                {
                 <p>Submitter</p>
-               }*@
-               @*if (r.RoleId.Equals(""))
+               }
+               if (r.RoleId.Equals(""))
                {
                    <p>Unassigned</p>
-               }*@
+               }
            }
 
            @*@Html.DisplayFor(modelItem => item.Roles)*@

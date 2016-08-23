@@ -18,7 +18,15 @@
         @Html.HiddenFor(model => model.OwnerUserId)
         @Html.HiddenFor(model => model.Updated)
         @Html.HiddenFor(model => model.Created)
-        
+        @if (User.IsInRole("Developer"))
+        {
+            @Html.HiddenFor(model => model.TicketStatusId)
+            @Html.HiddenFor(model => model.AssignedToUserId )
+        }
+
+
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })

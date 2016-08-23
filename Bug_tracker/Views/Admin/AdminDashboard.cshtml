@@ -9,71 +9,75 @@
 </div>
 
 
-<table class="table table-bordered sortable">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName )
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email) 
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Roles) 
-        </th>
+<table class="table table-bordered myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th>
 
 
-        <th></th>
-    </tr>
-  @foreach (var item in Model)
-  {
-   <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName )
-        </td> 
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName )
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-       <td>
-           @foreach (var r in item.Roles)
-           {
-              @r.RoleId
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @foreach (var r in item.Roles)
+                    {
+                        @*@r.RoleId*@
 
-               @*if (r.RoleId.Equals("9af08240-ae18-492f-af51-d88a1d3bc0d8"))
-               {
-                <p>Admin</p>
-               }
-               if (r.RoleId.Equals("e1924a28-aca9-4640-8c24-a9ebdad688ec"))
-               {
-                   <p>Developer</p>
-               }
-               if (r.RoleId.Equals("2a3cb811-bb8d-4171-8f93-85f8a6785f2b"))
-               {
-                <p>Project Manager</p>
-               }
-               if (r.RoleId.Equals("f30bf2cc-897e-4983-b712-99534f2adf9e"))
-               {
-                <p>Submitter</p>
-               }*@
-               @*if (r.RoleId.Equals(""))
-               {
-                   <p>Unassigned</p>
-               }*@
-           }
+                    if (r.RoleId.Equals("9af08240-ae18-492f-af51-d88a1d3bc0d8"))
+                    {
+                        <p>Admin</p>
+                    }
+                    if (r.RoleId.Equals("e1924a28-aca9-4640-8c24-a9ebdad688ec"))
+                    {
+                        <p>Developer</p>
+                        }
+                        if (r.RoleId.Equals("2a3cb811-bb8d-4171-8f93-85f8a6785f2b"))
+                        {
+                            <p>Project Manager</p>
+                        }
+                        if (r.RoleId.Equals("f30bf2cc-897e-4983-b712-99534f2adf9e"))
+                        {
+                            <p>Submitter</p>
+                        }
+                        if (r.RoleId.Equals(""))
+                        {
+                            <p>Unassigned</p>
+                        }
+                    }
 
-           @*@Html.DisplayFor(modelItem => item.Roles)*@
-       </td>
-        <td>
-            @Html.ActionLink("Edit Role", "EditUser", null, htmlAttributes: new { @class = "btn btn-info"})
-        </td>
-       
-    </tr>
-  }
+                    @*@Html.DisplayFor(modelItem => item.Roles)*@
+                </td>
+                <td>
+                    @Html.ActionLink("Edit Role", "EditUser", new {id = item.Id }, htmlAttributes: new { @class = "btn btn-info" })
+                </td>
+
+            </tr>
+        }
+    </tbody>
 </table>
 <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" style="width: 100%"></div>

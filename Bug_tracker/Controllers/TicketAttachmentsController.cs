@@ -25,20 +25,20 @@ namespace Bug_tracker
             return View(ticketAttachments.ToList());
         }
 
-        // GET: TicketAttachments/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
-            if (ticketAttachment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketAttachment);
-        }
+        //// GET: TicketAttachments/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
+        //    if (ticketAttachment == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(ticketAttachment);
+        //}
 
         // GET: TicketAttachments/Create
         public ActionResult Create(int? id)
@@ -54,7 +54,7 @@ namespace Bug_tracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Description,Created,FilePath")] TicketAttachment ticketAttachment, HttpPostedFileBase fileUpload)
+        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Description,Created")] TicketAttachment ticketAttachment, HttpPostedFileBase fileUpload)
         {
             //This is where I need to set the code for bringing my attachments into my ticket
 
@@ -67,54 +67,55 @@ namespace Bug_tracker
             }
 
 
-
-            if (ModelState.IsValid)
             {
-
-                if (fileUpload != null)
+                if (ModelState.IsValid)
                 {
-                    //relative server path
-                    var filePath = "/Uploads/";
-                    // path on physical drive on server
-                    var absPath = Server.MapPath("~" + filePath);
-                    // media url for relative path
-                    ticketAttachment.FilePath = filePath + fileUpload.FileName;
-                    //save image
-                    fileUpload.SaveAs(Path.Combine(absPath, fileUpload.FileName));
+
+                    if (fileUpload != null)
+                    {
+                        //relative server path
+                        var filePath = "/Uploads/";
+                        // path on physical drive on server
+                        var absPath = Server.MapPath("~" + filePath);
+                        // media url for relative path
+                        ticketAttachment.FilePath = filePath + fileUpload.FileName;
+                        //save image
+                        fileUpload.SaveAs(Path.Combine(absPath, fileUpload.FileName));
+                    }
+
+                    ticketAttachment.UserId = User.Identity.GetUserId();
+                    ticketAttachment.Created = DateTimeOffset.Now;
+                    db.TicketAttachments.Add(ticketAttachment);
+                    db.SaveChanges();
+                    return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
                 }
-
-                ticketAttachment.UserId = User.Identity.GetUserId();
-                ticketAttachment.Created = DateTimeOffset.Now;
-                db.TicketAttachments.Add(ticketAttachment);
-                db.SaveChanges();
-                return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
             }
-
             //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
             //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
             return View(ticketAttachment);
         }
 
-        // GET: TicketAttachments/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
-            if (ticketAttachment == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
-            return View(ticketAttachment);
-        }
+        //// GET: TicketAttachments/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
+        //    if (ticketAttachment == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+        //    ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
+        //    return View(ticketAttachment);
+        //}
 
         // POST: TicketAttachments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,TicketId,UserId,Description,Created,FilePath")] TicketAttachment ticketAttachment)
@@ -130,7 +131,8 @@ namespace Bug_tracker
             return View(ticketAttachment);
         }
 
-        // GET: TicketAttachments/Delete/5
+        //GET: TicketAttachments/Delete/5
+        [Authorize(Roles ="Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

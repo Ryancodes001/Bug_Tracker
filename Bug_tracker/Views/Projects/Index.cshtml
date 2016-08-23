@@ -58,11 +58,16 @@
             </td>
                     
 
-            <td>|
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
-                @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
-               @* @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })*@
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                   @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) 
+                } 
 
+                @if (User.IsInRole("Project Manager") || (User.IsInRole("Admin")))
+                {
+                    @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
+                }
 
 
             </td>

@@ -18,12 +18,8 @@
         @Html.HiddenFor(model => model.OwnerUserId)
         @Html.HiddenFor(model => model.Updated)
         @Html.HiddenFor(model => model.Created)
-        @if (User.IsInRole("Developer"))
-        {
-            @Html.HiddenFor(model => model.TicketStatusId)
-            @Html.HiddenFor(model => model.AssignedToUserId )
-        }
-
+       
+      
 
 
 
@@ -84,7 +80,7 @@
             </div>
         </div>
 
-        @if (User.IsInRole("Project Manager"))
+        @if (User.IsInRole("Project Manager") || (User.IsInRole("Project Manager") &&  User.IsInRole("Developer")))
         {
 
             <div class="form-group">
@@ -103,6 +99,14 @@
                 </div>
             </div>
         }
+
+        @if (User.IsInRole("Developer"))
+        {
+            @Html.HiddenFor(model => model.TicketStatusId)
+            @Html.HiddenFor(model => model.AssignedToUserId)
+        }
+
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save" class="btn btn-success btn-lg"  />

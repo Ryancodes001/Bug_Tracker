@@ -1,0 +1,86 @@
+// POST: Tickets/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Project Manager, Developer")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId")] Ticket ticket)
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            UserRolesHelper rolesHelper = new UserRolesHelper(db);
+            ProjectsHelper helper = new ProjectsHelper(db);
+            StringBuilder sb = new StringBuilder();
+            
+
+            //var ticketHistory = db.TicketHistory.Where(t => t.TicketId == ticket.Id).ToList();
+            var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+
+            if (ModelState.IsValid)
+            {
+                ticket.Updated = DateTimeOffset.Now;
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+
+                var newTicket = db.Tickets.Find(ticket.Id);
+
+                if (oldTicket != ticket)
+                {
+                    sb.AppendLine("Changes on " + DateTimeOffset.Now + ":");
+                    sb.Append("<br />");
+
+                    if (oldTicket.Title != ticket.Title)
+                    {
+                        sb.AppendLine("Title changed from " + oldTicket.Title + " to " + ticket.Title + ".");
+                        sb.Append("<br />");
+                    }
+                    if (oldTicket.Description != ticket.Description)
+                    {
+                        sb.AppendLine("Description changed from " + oldTicket.Description + " to " + ticket.Description + ".");
+                        sb.Append("<br />");
+                    }
+                    if (oldTicket.TicketStatusId != newTicket.TicketStatusId)
+                    {
+                        var newTicketStatus = db.TicketStatus.Where(s => s.Id == newTicket.TicketStatusId).Select(q => q.Name).FirstOrDefault();
+                        sb.AppendLine("Status changed from " + oldTicket.TicketStatus.Name + " to " + newTicketStatus + ".");
+                        sb.Append("<br />");
+                    }
+                    if (oldTicket.TicketPriorityId != ticket.TicketPriorityId)
+                    {
+                        var newTicketPriority = db.TicketPriority.Where(s => s.Id == newTicket.TicketPriorityId).Select(q => q.Name).FirstOrDefault();
+                        sb.AppendLine("Priority changed from " + oldTicket.TicketPriority.Name + " to " + newTicketPriority + ".");
+                        sb.Append("<br />");
+                    }
+                    if (oldTicket.TicketTypeId != ticket.TicketTypeId)
+                    {
+                        var newTicketType = db.TicketType.Where(s => s.Id == newTicket.TicketTypeId).Select(q => q.Name).FirstOrDefault();
+                        sb.AppendLine("Type changed from " + oldTicket.TicketType.Name + " to " + newTicketType + ".");
+                        sb.Append("<br />");
+                    }
+                    if (oldTicket.AssignedToUserId != ticket.AssignedToUserId)
+                    {
+                        var newTicketUser = db.Users.Where(s => s.Id == newTicket.AssignedToUserId).Select(q => q.DisplayName).FirstOrDefault();
+                        sb.AppendLine("Assigned User changed from " + oldTicket.AssignedToUser.DisplayName + " to " + newTicketUser + ".");
+                        sb.Append("<br />");
+                    }
+                }
+
+                var tHistory = new TicketHistory();
+                tHistory.TicketId = ticket.Id;
+                tHistory.Body = sb.ToString();
+
+                db.TicketHistory.Add(tHistory);
+                db.SaveChanges();
+
+                await UserManager.SendEmailAsync(ticket.AssignedToUserId, "Ticket Assigned/Modified", "You have been assigned a new ticket, or a ticket you are currently assigned to has been modified.");
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.AssignedToUserId = new SelectList(rolesHelper.UsersInRole("Developer"), "Id", "DisplayName", ticket.AssignedToUserId);
+            //ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.OwnerUserId);
+            ViewBag.ProjectId = new SelectList(helper.AssignedProjects(user.Id), "Id", "Title", ticket.ProjectId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name", ticket.TicketPriorityId);
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
+            ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
+            return View(ticket);
+        }

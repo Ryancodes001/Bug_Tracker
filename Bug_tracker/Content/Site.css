@@ -28,3 +28,22 @@ textarea {
     width: 100%;
 
 }
+
+.btnMargin {
+    margin: 5px;
+    padding: 10px;
+}
+
+.solidBorder {
+    border-style: solid;
+    border-width: 5px;
+    border-color:slategray;
+}
+
+.btnColor{
+    background-color:black;
+}
+
+.centerText{
+    text-align:center;
+}

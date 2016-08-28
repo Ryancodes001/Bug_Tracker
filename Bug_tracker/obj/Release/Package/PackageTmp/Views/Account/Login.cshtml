@@ -4,14 +4,14 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>Your journey starts here</h2>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
+                <h4></h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -38,23 +38,80 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
+                        <input type="submit" value="Log in" class="btn btn-success btn-lg" />
+                        
+                            @Html.ActionLink("Register as a new user", "Register", null, htmlAttributes: new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword", null, htmlAttributes: new { @class = "btn btn-danger" })
+                        </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                
+
+
+                @*@Html.ActionLink("Back to List", "Index", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })*@
+
+                //Enable this once you have account confirmation enabled for password reset functionality
+                    <br/>
             }
         </section>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Or choose to surf the site as one of the demo roles below!</h3>
+            </div>
+            <div class="panel-body">
+                @*<div class="btn-group btn-group-lg">*@
+                    @*<a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Click here to access different roles!</a>
+                    <ul class="dropdown-menu">*@
+                        
+                            <div class="well-sm">
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input type="hidden" name="Email" value="Developer@developer.com">
+                                    <input type="hidden" name="Password" value="Demo!1">
+                                    <input type="submit" value="Developer-Sherlock Holmes" class="btn btn-success btn-lg" />
+                                }
+                            </div>
+                        
+                       
+                            <div class="well-sm">
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input type="hidden" name="Email" value="ProjectManager@projectmanager.com">
+                                    <input type="hidden" name="Password" value="Demo!2">
+                                    <input type="submit" value="Project-Dr. John Watson" class="btn btn-success btn-lg" />
+                                }
+                            </div>
+                       
+                        
+                            <div class="well-sm">
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input type="hidden" name="Email" value="Submitter@submitter.com">
+                                    <input type="hidden" name="Password" value="Demo!3">
+                                    <input type="submit" value="Submitter-Prof. Moriarty" class="btn btn-success btn-lg" />
+                                }
+                            </div>
+                        
+
+                    @*</ul>*@
+                @*</div>*@
+
+            </div>
+            <div class="panel-footer panel-success"></div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+    <div class="col-md-6">
+        
+
+
+        
+        <img  src="~/img/log2.jpeg" class="resize solidBorder" />
+
     </div>
 </div>
 

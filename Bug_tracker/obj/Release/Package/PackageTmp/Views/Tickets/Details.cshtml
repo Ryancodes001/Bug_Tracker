@@ -1,115 +1,165 @@
 ﻿@model Bug_tracker.Models.CodeFirst.Ticket
 
-@{
-    ViewBag.Title = "Details";
+@{ 
+    ViewBag.Author = ViewBag.Author;
 }
 
-<h2>@Model.Title</h2>
+<h2 class="centerText">@Model.Title</h2>
+<div class="row">
 
-<div>
-    <h4>Ticket</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-           Assigned to
-        </dt>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Assigned to
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AssignedToUser.DisplayName)
+                    </dd>
+                    <dt>
+                        Submitter
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OwnerUser.DisplayName)
+                    </dd>
+                    <dt>
+                        Project Title
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Project.Title)
+                    </dd>
+                    <dt>
+                        Priority
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TicketPriority.Name)
+                    </dd>
+                    <dt>
+                        Status
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TicketStatus.Name)
+                    </dd>
+                    <dt>
+                        Type
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TicketType.Name)
+                    </dd>
+                    <dt>
+                        Ticket Title
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                    <dt>
+                        Description
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <dt>
+                        Created
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Created)
+                    </dd>
+                    <dt>
+                        Updated
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Updated)
+                    </dd>
+                </dl>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.AssignedToUser.DisplayName)
-        </dd>
+    </div>
 
-        <dt>
-            Submitter
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OwnerUser.DisplayName)
-        </dd>
-
-        <dt>
-            Project Title
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Project.Title)
-        </dd>
-
-        <dt>
-           Priority
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TicketPriority.Name)
-        </dd>
-
-        <dt>
-            Status
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TicketStatus.Name)
-        </dd>
-
-        <dt>
-            Type
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TicketType.Name)
-        </dd>
-
-        <dt>
-            Ticket Title
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-           Description
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-           Created
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-        <dt>
-            Updated
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-
-    </dl>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ticket History</h3>
+            </div>
+            <div class="panel-body">
+                @foreach (var h in Model.TicketHistories)
+                {
+                    <blockquote>
+                        <p>@Html.Raw(h.Body)</p>
+                       
+                    </blockquote>
+                            <br />
+                }
+            </div>
+        </div>
+    </div>
 </div>
-<h4>Ticket Comments</h4>
-@Html.ActionLink("Leave a Comment", "Create", "TicketComments", new { id = Model.Id }, null) 
-<div>
-    @foreach (var c in Model.TicketComments)
-    {
-        @c.Body <br/>
-    }
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Comments</h3>
+            </div>
+            <div class="panel-body">
+
+                <h4>Ticket Comments</h4>
+
+                @Html.ActionLink("Leave a Comment", "Create", "TicketComments", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+
+
+                @foreach (var c in Model.TicketComments)
+                {
+                    <blockquote>
+                        <p>@c.Body</p>
+                        @*<small>@c.User.DisplayName</small>*@
+                    </blockquote>
+                    <br />
+                }
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Attachments</h3>
+            </div>
+            <div class="panel-body">
+
+                <h4>Ticket Attachments</h4>
+                @Html.ActionLink("Leave an Attachment", "Create", "TicketAttachments", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                <br />
+                <div>
+                    @foreach (var a in Model.TicketAttachments)
+                    {
+                        <blockquote>
+                            <a href="@a.FilePath">@a.Description</a>  <br />
+                            <small>@a.User.DisplayName</small>
+                        </blockquote>
+                    }
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
 </div>
-<h4>Ticket Attachments</h4> </br>
-@Html.ActionLink("Leave an Attachment", "Create", "TicketAttachments", new { id = Model.Id }, null) 
-<div>
-        @foreach (var a in Model.TicketAttachments)
-        {
-             <a href="@a.FilePath">@a.Description</a>  <br />
-        }
-</div>
-<br/>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
+{
+    
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" }) 
+    
+}
+
+
+
+    @Html.ActionLink("Back to List", "Index", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+    

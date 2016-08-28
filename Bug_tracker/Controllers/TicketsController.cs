@@ -79,24 +79,28 @@ namespace BugTracker.Controllers
         // GET: Tickets/Details/5
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         public ActionResult Details(int? id)
-          {
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             //Find the user, roles, and ticket Id
             UserRolesHelper rolesHelper = new UserRolesHelper(db);
             var user = db.Users.Find(User.Identity.GetUserId());
             var userRoles = rolesHelper.ListUserRoles(user.Id);
             Ticket ticket = db.Tickets.Find(id);
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Ticket ticket = db.Tickets.Find(id);
+
             if (ticket == null)
             {
                 return HttpNotFound();
             }
 
+            //Security for URL hacking
             //If user is submitter or developer related to ticket, return that ticket
+
             if (user.Id == ticket.AssignedToUserId || user.Id == ticket.OwnerUserId)
             {
                 return View(ticket);
@@ -106,17 +110,53 @@ namespace BugTracker.Controllers
             {
                 return View(ticket);
             }
-            //if user is project manager for this ticket, return the view 
-            if (ticket.Project.ApplicationUsers.Contains(user))
+
+            if (userRoles.Contains("Project Manager"))
             {
-                return View(ticket);
+                if (ticket.Project.ApplicationUsers.Contains(user))
+                {
+                    return View(ticket);
+                }
             }
-                
+            if (userRoles.Contains("Developer") && userRoles.Contains("Submitter"))
+            {
+                if (ticket.AssignedToUserId == user.Id)
+                {
+                    return View(ticket);
+                }
+                if (ticket.OwnerUserId == user.Id)
+                {
+                    return View(ticket);
+                }
+            }
+            if (userRoles.Contains("Developer"))
+            {
+                if (ticket.AssignedToUserId == user.Id)
+                {
+                    return View(ticket);
+                }
+            }
+            if (userRoles.Contains("Submitter"))
+            {
+                if (ticket.OwnerUserId == user.Id)
+                {
+                    return View(ticket);
+                }
+            }
 
             return RedirectToAction("Login", "Account");
-
         }
-        
+        //if user is project manager for this ticket, return the view 
+        //if (ticket.Project.ApplicationUsers.Contains(user))
+        //{
+        //    return View(ticket);
+        //}
+
+
+        //return RedirectToAction("Login", "Account");
+
+
+
 
         // GET: Tickets/Create
         [Authorize(Roles = "Submitter")]
@@ -139,7 +179,7 @@ namespace BugTracker.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[Authorize]
+        [Authorize(Roles = "Submitter")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,Description,Created,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId")] Ticket ticket)
@@ -147,7 +187,7 @@ namespace BugTracker.Controllers
             var user = db.Users.Find(User.Identity.GetUserId());
             ProjectsHelper helper = new ProjectsHelper(db);
             TicketHistory ticketHistory = new TicketHistory();
-           
+
 
 
             if (ModelState.IsValid)
@@ -177,13 +217,13 @@ namespace BugTracker.Controllers
         }
 
         // GET: Tickets/Edit/5
-        [Authorize(Roles ="Project Manager, Developer")]
+        [Authorize(Roles = "Project Manager, Developer")]
         public ActionResult Edit(int? id)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
             ProjectsHelper projectHelper = new ProjectsHelper(db);
             UserRolesHelper rolesHelper = new UserRolesHelper(db);
-           
+
 
             if (id == null)
             {
@@ -202,6 +242,11 @@ namespace BugTracker.Controllers
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
+
+
+            //Could use security here
+
+
             return View(ticket);
         }
 
@@ -293,8 +338,9 @@ namespace BugTracker.Controllers
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
             return View(ticket);
+                }
+            }
         }
-
         //// POST: Tickets/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -361,42 +407,47 @@ namespace BugTracker.Controllers
         //    ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
         //    return View(ticket);
         //}
+
+
+
+
+    //commented out for security
         // GET: Tickets/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Ticket ticket = db.Tickets.Find(id);
-            if (ticket == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticket);
-        }
+//        public ActionResult Delete(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            Ticket ticket = db.Tickets.Find(id);
+//            if (ticket == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(ticket);
+//        }
 
-        // POST: Tickets/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Ticket ticket = db.Tickets.Find(id);
-            db.Tickets.Remove(ticket);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+//        // POST: Tickets/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult DeleteConfirmed(int id)
+//        {
+//            Ticket ticket = db.Tickets.Find(id);
+//            db.Tickets.Remove(ticket);
+//            db.SaveChanges();
+//            return RedirectToAction("Index");
+//        }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
-}
+//        protected override void Dispose(bool disposing)
+//        {
+//            if (disposing)
+//            {
+//                db.Dispose();
+//            }
+//            base.Dispose(disposing);
+//        }
+//    }
+//}
 
 
 

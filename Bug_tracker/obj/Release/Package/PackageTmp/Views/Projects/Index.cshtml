@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Project Index</h2>
+<h1 class="centerText">Project Index</h1>
 <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" style="width: 100%"></div>
 </div>
@@ -58,11 +58,16 @@
             </td>
                     
 
-            <td>|
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
-                @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" }) |
-               @* @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })*@
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                   @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-success btn-sm" }) 
+                } 
 
+                @if (User.IsInRole("Project Manager") || (User.IsInRole("Admin")))
+                {
+                    @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-success btn-sm" })
+                }
 
 
             </td>
@@ -72,7 +77,7 @@
 
 </table>
 <p>
-@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-info btn-lg" } )
+@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary btn-lg" } )
 </p>
 
 <div class="progress progress-striped active">

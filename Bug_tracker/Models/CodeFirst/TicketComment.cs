@@ -17,6 +17,6 @@ namespace Bug_tracker.Models.CodeFirst
 
 
         public virtual Ticket Ticket { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

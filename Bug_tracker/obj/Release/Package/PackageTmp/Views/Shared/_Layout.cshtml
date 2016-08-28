@@ -13,6 +13,9 @@
     <link href="~/Content/Slatebootsrap.css" rel="stylesheet">
 
 </head>
+
+
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -28,7 +31,13 @@
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                     <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
-                    <li>@Html.ActionLink("Admin", "AdminDashboard", "Admin")</li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Admin", "AdminDashboard", "Admin")</li>
+
+                    }
+
                     <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -39,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; - A Ryan Rousseau Production</p>
+            <p class="centerText">&copy; - A <a href="https://rrousseau-portfolio.azurewebsites.net/">Ryan Rousseau</a> Production</p>
         </footer>
     </div>
   

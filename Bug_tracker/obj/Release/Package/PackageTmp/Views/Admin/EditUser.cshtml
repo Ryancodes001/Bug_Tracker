@@ -5,6 +5,7 @@
 }
 
 <h2>@Model.User.FirstName @Model.User.LastName </h2>
+<br/>
 
 @*I want to list the name of the Person I am assigning roles to here*@
 
@@ -13,32 +14,44 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            @using (Html.BeginForm("AddRole", "Admin"))
 
-            {
-                @Html.AntiForgeryToken()
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Role(s) to User</h3>
+                </div>
+                <div class="panel-body">
+                   
 
-                <input type="hidden" value="@Model.User.Id" name="AddId" />
+                    @using (Html.BeginForm("AddRole", "Admin"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@Model.User.Id" name="AddId" />
+                        @Html.ListBox("SelectedAbsentRoles", Model.AbsentRoles, htmlAttributes: new { @class = "form-control" })
+                        <br />
+                        <input type="submit" class="btn btn-succ" value="Add Role" name="AddRole" />
+                    }
 
-                @Html.ListBox("SelectedAbsentRoles", Model.AbsentRoles, htmlAttributes: new { @class = "form-control" })
-
-                <input type="submit" class="btn btn-primary" value="AddRole" name="AddRole" />
-            }
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
-            @using (Html.BeginForm("RemoveRole", "Admin"))
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Remove Role(s) from User</h3>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("RemoveRole", "Admin"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@Model.User.Id" name="RemoveId" />
+                        @Html.ListBox("SelectedCurrentRoles", Model.Roles, htmlAttributes: new { @class = "form-control" })
+                        <br />
+                        <input type="submit" class="btn btn-danger" value="Remove Role" name="RemoveRole" />
+                    }
 
-            {
-                @Html.AntiForgeryToken()
+                </div>
+            </div>
 
-
-                <input type="hidden" value="@Model.User.Id" name="RemoveId" />
-
-
-                @Html.ListBox("SelectedCurrentRoles", Model.Roles, htmlAttributes: new { @class = "form-control" })
-
-                <input type="submit" class="btn btn-primary" value="Remove Role" name="RemoveRole" />
-            }
         </div>
     </div>
 </div>

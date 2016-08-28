@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bug_tracker.Models;
 using Microsoft.AspNet.Identity;
+using Bug_tracker.Helpers;
 
 namespace Bug_tracker.Models.CodeFirst
 {
@@ -28,6 +29,7 @@ namespace Bug_tracker.Models.CodeFirst
         // GET: TicketComments/Details/5
         public ActionResult Details(int? id)
         {
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -43,23 +45,60 @@ namespace Bug_tracker.Models.CodeFirst
         // GET: TicketComments/Create
         public ActionResult Create(int? id)
         {
-            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
             ViewBag.TicketId = id;
-            return View();
+            UserRolesHelper rolesHelper = new UserRolesHelper(db);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var userRoles = rolesHelper.ListUserRoles(user.Id);
+            Ticket ticket = db.Tickets.Find(id);
+            ViewBag.Author = user.DisplayName;
+
+            if (userRoles.Contains("Admin"))
+            {
+                return View();
+            }
+            if (userRoles.Contains("Project Manager"))
+            {
+                if (ticket.Project.ApplicationUsers.Contains(user))
+                {
+                    return View();
+                }
+            }
+            if (userRoles.Contains("Developer"))
+            {
+                if (ticket.AssignedToUserId == user.Id)
+                {
+                    return View();
+                }
+            }
+            if (userRoles.Contains("Submitter"))
+            {
+                if (ticket.OwnerUserId == user.Id)
+                {
+                    return View();
+                }
+            }
+
+            return RedirectToAction("Login", "Account");
         }
+
+        //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
+       
 
         // POST: TicketComments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Body,Created")] TicketComment ticketComment)
         {
-            
-            
+            var user = db.Users.Find(User.Identity.GetUserId());
+            ViewBag.Author = user.DisplayName;
+
 
             if (ModelState.IsValid)
             {
+                
                 ticketComment.UserId = User.Identity.GetUserId();
                 ticketComment.Created = DateTimeOffset.Now;
                 db.TicketComments.Add(ticketComment);

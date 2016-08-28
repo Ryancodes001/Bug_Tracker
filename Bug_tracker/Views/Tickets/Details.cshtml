@@ -1,7 +1,7 @@
 ﻿@model Bug_tracker.Models.CodeFirst.Ticket
 
-@{
-    ViewBag.Title = "Details";
+@{ 
+    ViewBag.Author = ViewBag.Author;
 }
 
 <h2 class="centerText">@Model.Title</h2>
@@ -117,7 +117,7 @@
                 {
                     <blockquote>
                         <p>@c.Body</p>
-                        <small></small>
+                        @*<small>@c.User.DisplayName</small>*@
                     </blockquote>
                     <br />
                 }
@@ -142,6 +142,7 @@
                     {
                         <blockquote>
                             <a href="@a.FilePath">@a.Description</a>  <br />
+                            <small>@a.User.DisplayName</small>
                         </blockquote>
                     }
                 </div>
@@ -151,8 +152,14 @@
     </div>
 </div>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" }) |
+@if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
+{
+    
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" }) 
+    
+}
+
+
 
     @Html.ActionLink("Back to List", "Index", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
-</p>
+    

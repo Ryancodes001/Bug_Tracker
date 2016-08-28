@@ -31,7 +31,7 @@ textarea {
 
 .btnMargin {
     margin: 5px;
-    padding: 10px;
+    
 }
 
 .solidBorder {
@@ -46,4 +46,13 @@ textarea {
 
 .centerText{
     text-align:center;
+   
+}
+
+.bodySize{
+    padding: 30px;
+}
+
+.centerContent{
+    margin: auto;
 }

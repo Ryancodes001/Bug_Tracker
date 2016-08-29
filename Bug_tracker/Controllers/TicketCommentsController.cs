@@ -19,30 +19,31 @@ namespace Bug_tracker.Models.CodeFirst
        //public Ticket ticket = new Ticket();
 
 
-        // GET: TicketComments
-        public ActionResult Index()
-        {
-            var ticketComments = db.TicketComments.Include(t => t.Ticket);
-            return View(ticketComments.ToList());
-        }
+        //// GET: TicketComments
+        //public ActionResult Index()
+        //{
+        //    var ticketComments = db.TicketComments.Include(t => t.Ticket);
+        //    return View(ticketComments.ToList());
+        //}
 
-        // GET: TicketComments/Details/5
-        public ActionResult Details(int? id)
-        {
+        //// GET: TicketComments/Details/5
+        //public ActionResult Details(int? id)
+        //{
             
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketComment ticketComment = db.TicketComments.Find(id);
-            if (ticketComment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketComment);
-        }
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    TicketComment ticketComment = db.TicketComments.Find(id);
+        //    if (ticketComment == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(ticketComment);
+        //}
 
         // GET: TicketComments/Create
+        [Authorize (Roles="Admin, Project Manager Developer, Submitter")]
         public ActionResult Create(int? id)
         {
             ViewBag.TicketId = id;

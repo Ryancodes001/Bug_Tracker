@@ -223,6 +223,8 @@ namespace BugTracker.Controllers
             var user = db.Users.Find(User.Identity.GetUserId());
             ProjectsHelper projectHelper = new ProjectsHelper(db);
             UserRolesHelper rolesHelper = new UserRolesHelper(db);
+            var userRoles = rolesHelper.ListUserRoles(user.Id);
+
 
 
             if (id == null)
@@ -244,8 +246,20 @@ namespace BugTracker.Controllers
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
 
 
-            //Could use security here
-
+          //if (userRoles.Contains("Project Manager"))
+          //  {
+          //      if (ticket.Project.ApplicationUsers.Contains(user))
+          //      {
+          //          return View();
+          //      }
+          //  }
+          //if (userRoles.Contains("Developer"))
+          //  {
+          //      if (ticket.AssignedToUserId == user.Id)
+          //      {
+          //          return View();
+          //      }
+          //  }
 
             return View(ticket);
         }
@@ -269,13 +283,15 @@ namespace BugTracker.Controllers
 
 
             //var ticketHistory = db.TicketHistory.Where(t => t.TicketId == ticket.Id).ToList();
-            var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+            //var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
 
             if (ModelState.IsValid)
             {
                 ticket.Updated = DateTimeOffset.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
 
                 var newTicket = db.Tickets.Find(ticket.Id);
 
@@ -314,18 +330,27 @@ namespace BugTracker.Controllers
                     }
                     if (oldTicket.AssignedToUserId != ticket.AssignedToUserId)
                     {
-                        var newTicketUser = db.Users.Where(s => s.Id == newTicket.AssignedToUserId).Select(q => q.UserName).FirstOrDefault();
-                        sb.AppendLine("Assigned User changed from " + oldTicket.AssignedToUser.UserName + " to " + newTicketUser + ".");
+                        var newTicketUserF = db.Users.Where(s => s.Id == newTicket.AssignedToUserId).Select(q => q.FirstName).FirstOrDefault();
+                        var newTicketUserL = db.Users.Where(s => s.Id == newTicket.AssignedToUserId).Select(q => q.LastName).FirstOrDefault();
+                        var oldTicketUserF = db.Users.Where(s => s.Id == oldTicket.AssignedToUserId).Select(q => q.FirstName).FirstOrDefault();
+                        var oldTicketUserL = db.Users.Where(s => s.Id == oldTicket.AssignedToUserId).Select(q => q.LastName).FirstOrDefault();
+                        sb.AppendLine("Assigned User changed from " + oldTicketUserF + " " + oldTicketUserL + " to " + newTicketUserF + " " + newTicketUserL + ".");
                         sb.Append("<br />");
                     }
+
+                    var tHistory = new TicketHistory();
+                    tHistory.TicketId = ticket.Id;
+                    tHistory.Body = sb.ToString();
+
+                    db.TicketHistory.Add(tHistory);
+                    db.SaveChanges();
+
                 }
-
-                var tHistory = new TicketHistory();
-                tHistory.TicketId = ticket.Id;
-                tHistory.Body = sb.ToString();
-
-                db.TicketHistory.Add(tHistory);
-                db.SaveChanges();
+                else
+                {
+                    db.SaveChanges();
+                }
+                              
 
                 await UserManager.SendEmailAsync(ticket.AssignedToUserId, "Ticket Assigned/Modified", "You have been assigned a new ticket, or a ticket you are currently assigned to has been modified.");
                 return RedirectToAction("Index");

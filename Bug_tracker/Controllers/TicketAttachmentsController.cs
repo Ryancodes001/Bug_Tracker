@@ -10,7 +10,7 @@ using Bug_tracker.Models;
 using Bug_tracker.Models.CodeFirst;
 using Microsoft.AspNet.Identity;
 using System.IO;
-
+using Bug_tracker.Helpers;
 
 namespace Bug_tracker
 {
@@ -18,12 +18,15 @@ namespace Bug_tracker
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: TicketAttachments
-        public ActionResult Index()
-        {
-            var ticketAttachments = db.TicketAttachments.Include(t => t.Ticket).Include(t => t.User);
-            return View(ticketAttachments.ToList());
-        }
+
+        //No need for a ticket attachments index
+
+        //// GET: TicketAttachments
+        //public ActionResult Index()
+        //{
+        //    var ticketAttachments = db.TicketAttachments.Include(t => t.Ticket).Include(t => t.User);
+        //    return View(ticketAttachments.ToList());
+        //}
 
         //// GET: TicketAttachments/Details/5
         //public ActionResult Details(int? id)
@@ -41,10 +44,42 @@ namespace Bug_tracker
         //}
 
         // GET: TicketAttachments/Create
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         public ActionResult Create(int? id)
         {
-            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
-            //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
+            UserRolesHelper rolesHelper = new UserRolesHelper(db);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var userRoles = rolesHelper.ListUserRoles(user.Id);
+            Ticket ticket = db.Tickets.Find(id);
+
+            if (userRoles.Contains("Admin"))
+            {
+                return View();
+            }
+            if (userRoles.Contains("Project Manager"))
+            {
+                if (ticket.Project.ApplicationUsers.Contains(user))
+                {
+                    return View();
+                }
+
+            }
+            if (userRoles.Contains("Developer"))
+            {
+                if (ticket.AssignedToUserId == user.Id)
+                {
+                    return View();
+                }
+            }
+            if (userRoles.Contains("Submitter"))
+            {
+                if (ticket.OwnerUserId == user.Id)
+                {
+                    return View();
+                }
+            }
+
+
             ViewBag.TicketId = id;
             return View();
         }
@@ -56,12 +91,12 @@ namespace Bug_tracker
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,TicketId,UserId,Description,Created")] TicketAttachment ticketAttachment, HttpPostedFileBase fileUpload)
         {
-            //This is where I need to set the code for bringing my attachments into my ticket
+
 
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
                 //check the file name to make sure its an image
-                var ext = Path.GetExtension(fileUpload.FileName ).ToLower();
+                var ext = Path.GetExtension(fileUpload.FileName).ToLower();
                 if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp" && ext != ".pdf" && ext != ".doc" && ext != ".docx")
                     ModelState.AddModelError("fileUpload", "Invalid Format.");
             }
@@ -94,7 +129,10 @@ namespace Bug_tracker
             //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
             return View(ticketAttachment);
         }
-
+    }
+}
+    
+ 
         //// GET: TicketAttachments/Edit/5
         //public ActionResult Edit(int? id)
         //{
@@ -115,56 +153,56 @@ namespace Bug_tracker
         // POST: TicketAttachments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TicketId,UserId,Description,Created,FilePath")] TicketAttachment ticketAttachment)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(ticketAttachment).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
-            return View(ticketAttachment);
-        }
+//        [Authorize(Roles = "Admin")]
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult Edit([Bind(Include = "Id,TicketId,UserId,Description,Created,FilePath")] TicketAttachment ticketAttachment)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                db.Entry(ticketAttachment).State = EntityState.Modified;
+//                db.SaveChanges();
+//                return RedirectToAction("Index");
+//            }
+//            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+//            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
+//            return View(ticketAttachment);
+//        }
 
-        //GET: TicketAttachments/Delete/5
-        [Authorize(Roles ="Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
-            if (ticketAttachment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketAttachment);
-        }
+//        //GET: TicketAttachments/Delete/5
+//        [Authorize(Roles ="Admin")]
+//        public ActionResult Delete(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
+//            if (ticketAttachment == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(ticketAttachment);
+//        }
 
-        // POST: TicketAttachments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
-            db.TicketAttachments.Remove(ticketAttachment);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+//        // POST: TicketAttachments/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult DeleteConfirmed(int id)
+//        {
+//            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
+//            db.TicketAttachments.Remove(ticketAttachment);
+//            db.SaveChanges();
+//            return RedirectToAction("Index");
+//        }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
-}
+//        protected override void Dispose(bool disposing)
+//        {
+//            if (disposing)
+//            {
+//                db.Dispose();
+//            }
+//            base.Dispose(disposing);
+//        }
+//    }
+//}

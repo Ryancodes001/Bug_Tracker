@@ -55,7 +55,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -170,7 +170,7 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
 
-        // POST: Projects/ChangeUsers (ADD USER) ---check SRS if these permissions are correct
+        // POST: Projects/ChangeUsers (ADD USER) ---c
         [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]

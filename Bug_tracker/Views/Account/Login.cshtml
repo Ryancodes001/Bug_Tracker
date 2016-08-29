@@ -62,40 +62,45 @@
                     @*<a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Click here to access different roles!</a>
                     <ul class="dropdown-menu">*@
                         
-                            <div class="well-sm">
-                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <input type="hidden" name="Email" value="Developer@developer.com">
-                                    <input type="hidden" name="Password" value="Demo!1">
-                                    <input type="submit" value="Developer-Sherlock Holmes" class="btn btn-success btn-lg" />
-                                }
-                            </div>
-                        
-                       
-                            <div class="well-sm">
-                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <input type="hidden" name="Email" value="ProjectManager@projectmanager.com">
-                                    <input type="hidden" name="Password" value="Demo!2">
-                                    <input type="submit" value="Project-Dr. John Watson" class="btn btn-success btn-lg" />
-                                }
-                            </div>
-                       
-                        
-                            <div class="well-sm">
-                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <input type="hidden" name="Email" value="Submitter@submitter.com">
-                                    <input type="hidden" name="Password" value="Demo!3">
-                                    <input type="submit" value="Submitter-Prof. Moriarty" class="btn btn-success btn-lg" />
-                                }
-                            </div>
+                            
+
+                <div class="well-sm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="Submitter@submitter.com">
+                        <input type="hidden" name="Password" value="Demo!3">
+                        <input type="submit" value="Submitter-Prof. Moriarty" class="btn btn-success btn-lg" />
+                    }
+                </div>
+
+
+                <div class="well-sm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="ProjectManager@projectmanager.com">
+                        <input type="hidden" name="Password" value="Demo!2">
+                        <input type="submit" value="Project Manager-Dr. Watson" class="btn btn-success btn-lg" />
+                    }
+                </div>
+
+                <div class="well-sm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="Developer@developer.com">
+                        <input type="hidden" name="Password" value="Demo!1">
+                        <input type="submit" value="Developer-Sherlock Holmes" class="btn btn-success btn-lg" />
+                    }
+                </div>
+
+
+
+     
                         
 
                     @*</ul>*@

@@ -76,9 +76,14 @@
 </tbody>
 
 </table>
-<p>
-@Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary btn-lg" } )
-</p>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+    </p>
+}
+
 
 <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" style="width: 100%"></div>

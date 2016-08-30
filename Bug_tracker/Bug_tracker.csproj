@@ -511,6 +511,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Uploads\about-bg.jpg" />
+    <Content Include="Uploads\firepit.jpg" />
+    <Content Include="Uploads\sherlockTrain.jpg" />
     <Content Include="video\grasshopper.mp4" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -578,7 +581,6 @@
     <Folder Include="Areas\test\Controllers\" />
     <Folder Include="Areas\test\Models\" />
     <Folder Include="Areas\test\Views\Shared\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

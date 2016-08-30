@@ -62,6 +62,17 @@ namespace Bug_tracker.Controllers
             return View();
         }
 
+        //Could I use this to log out and dispose my current demo login when another is chosen?
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
+
         //
         // POST: /Account/Login
         [HttpPost]

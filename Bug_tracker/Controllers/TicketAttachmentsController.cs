@@ -52,6 +52,9 @@ namespace Bug_tracker
             var userRoles = rolesHelper.ListUserRoles(user.Id);
             Ticket ticket = db.Tickets.Find(id);
 
+            ViewBag.UserId = user.Id;
+            ViewBag.TicketId = id;
+
             if (userRoles.Contains("Admin"))
             {
                 return View();
@@ -79,8 +82,7 @@ namespace Bug_tracker
                 }
             }
 
-
-            ViewBag.TicketId = id;
+           
             return View();
         }
 
@@ -105,7 +107,7 @@ namespace Bug_tracker
             {
                 if (ModelState.IsValid)
                 {
-
+                    
                     if (fileUpload != null)
                     {
                         //relative server path

@@ -43,7 +43,7 @@ namespace Bug_tracker.Models.CodeFirst
         //}
 
         // GET: TicketComments/Create
-        [Authorize (Roles="Admin, Project Manager Developer, Submitter")]
+        [Authorize (Roles="Admin, Project Manager, Developer, Submitter")]
         public ActionResult Create(int? id)
         {
             ViewBag.TicketId = id;

@@ -61,3 +61,17 @@ textarea {
     border-color:slategray;
     width: 100%
 }
+.backColor{
+    background-color:darkgrey;
+}
+
+html *{
+    font-family:'Cambria Math'
+}
+
+.backgroundImage{
+    background-image: url("/img/log2.jpeg")
+                        
+            
+    
+}

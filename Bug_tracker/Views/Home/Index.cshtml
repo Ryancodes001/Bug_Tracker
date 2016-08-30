@@ -1,101 +1,60 @@
 ﻿@model Bug_tracker.Models.LoginViewModel
 
-@{
-    Layout = null;
-}
-
-@{
-    ViewBag.Title = "Home Page";
-}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Ryan Rousseau-Bug Tracker</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Scripts.Render("~/bundles/modernizr")*@
 
     @* jQuery data tables Css here *@
-    <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+    @*<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />*@
 
-    <link href="~/Content/Slatebootsrap.css" rel="stylesheet">
-
-</head>
+    @*<link href="~/Content/Slatebootsrap.css" rel="stylesheet">*@
 
 
 
-<body class="bodySize">
-    <div class="container body-content">
+
+
 
         <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width: 100%"></div>
         </div>
 
         <div class="jumbotron">
-            <h1 class="centerContent centerText borderBottom">Bug Tracker</h1>
-            <br/>
-           
+    <h1 class="centerContent centerText borderBottom">Bug Tracker</h1>
+    <br />
 
 
-            <div class="row">
-             
 
-                <div class="col-md-6 ">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading"><h3>Click the tracks to start tracking!</h3></div>
-                        <div class="panel-body">
+    <div class="row">
 
 
-                            <a href="/Account/Login" id="loginLink"> <img src="~/img/traintracks.jpg" class="resize solidBorder" /> </a>
-                        </div>
-                        <div class="panel-footer "></div>
-                    </div>
+        <div class="col-md-6 ">
+            <div class="panel panel-success">
+                <div class="panel-heading"><h3>Click the tracks to start tracking!</h3></div>
+                <div class="panel-body">
+                    <a href="/Account/Login"> <img class="resize" src="~/img/traintracks.jpg" /></a>
+
                 </div>
+                <div class="panel-footer "></div>
+            </div>
+        </div>
 
-                <div class="col-md-6 ">
-
-                 
-                    @if(User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Developer") || User.IsInRole("Submitter"))
-                    {
-
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h2 class="panel-title"> User Dashboard</h2>
-                        </div>
-                        <div class="panel-body">
-                            @if (User.IsInRole("Developer") || User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Submitter"))
-                            {
-                                @Html.ActionLink("Tickets", "Index", "Tickets", null, htmlAttributes: new { @class = "btn-primary btn-lg btnMargin" })
-                                @Html.ActionLink("Projects", "Index", "Projects", null, htmlAttributes: new { @class = "btn-primary btn-lg btnMargin" })
-                            }
+        <div class="col-md-6 ">
 
 
-                            @if (User.IsInRole("Admin"))
-                            {
-                                @Html.ActionLink("Admin", "AdminDashboard", "Admin", null, htmlAttributes: new { @class = "btn-primary btn-lg btnMargin" })
 
-                            }
 
-                        </div>
-                    </div>
-                    }
-
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Welcome!</h3>
-                        </div>
-                        <div class="panel-body">
-                            <p class="centerText">
-                                Welcome to my Bug Tracking application! Here you will find methods for submitting, updating, and tracking issues or "bugs" in a real world application! Please feel free to navigate the site through the 
-                                use of several demo logins, each representing the different roles of the platform. 
-                            </p>
-                        </div>
-                    </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3>Welcome!</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="centerText">
+                        Welcome to my Bug Tracking application! Here you will find methods for submitting, updating, and tracking issues or "bugs" in a real world application! Please feel free to navigate the site through the
+                        use of several demo logins, each representing the different roles of the platform.
+                    </p>
                 </div>
             </div>
-
+        </div>
+    </div>
+</div>
             <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-success" style="width: 100%"></div>
             </div>
@@ -104,28 +63,24 @@
             <footer>
                 <p class="centerText">&copy; - A <a href="https://rrousseau-portfolio.azurewebsites.net/">Ryan Rousseau</a> Production</p>
             </footer>
-        </div>
+       
 
 
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
+        @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
         @*@RenderSection("scripts", required: false)*@
 
         @* jQuery data tables here *@
-        <script type="text/javascript" src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+        @*<script type="text/javascript" src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 
 
-        @* my personal js file *@
-        <script type="text/javascript" src="~/Scripts/datatables.js"></script>
+       <script type="text/javascript" src="~/Scripts/datatables.js"></script>
 
-        <script type="text/javascript" src="~/Scripts/DataTables/dataTables.bootstrap.js"></script>
+        <script type="text/javascript" src="~/Scripts/DataTables/dataTables.bootstrap.js"></script>*@
 
 
-    </div>
-</body>
-</html>
-
+ 
 
 @*<div class="col-md-4 ">*@
 

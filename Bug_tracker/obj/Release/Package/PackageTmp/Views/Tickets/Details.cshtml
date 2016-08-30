@@ -89,11 +89,15 @@
             <div class="panel-body">
                 @foreach (var h in Model.TicketHistories)
                 {
+                    if (h.Body != null)
+                    {
+
                     <blockquote>
                         <p>@Html.Raw(h.Body)</p>
                        
                     </blockquote>
                             <br />
+                    }
                 }
             </div>
         </div>
@@ -117,7 +121,7 @@
                 {
                     <blockquote>
                         <p>@c.Body</p>
-                        @*<small>@c.User.DisplayName</small>*@
+                        <small>@c.User.DisplayName</small>
                     </blockquote>
                     <br />
                 }

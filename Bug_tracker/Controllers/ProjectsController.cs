@@ -35,10 +35,6 @@ namespace Bug_tracker.Models.CodeFirst
             return RedirectToAction("Index");
         }
 
-            
-
-
-
         // GET: Projects/Details/5
         public ActionResult Details(int? id)
         {
@@ -114,41 +110,7 @@ namespace Bug_tracker.Models.CodeFirst
             return View(project);
         }
 
-        //// GET: Projects/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Project project = db.Projects.Find(id);
-        //    if (project == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(project);
-        //}
-
-        //// POST: Projects/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Project project = db.Projects.Find(id);
-        //    db.Projects.Remove(project);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
+      
         //GET Change User
         [Authorize(Roles = "Admin, Project Manager")]
 
@@ -183,22 +145,28 @@ namespace Bug_tracker.Models.CodeFirst
                 var project = db.Projects.Find(AddUserProjectID);
 
                 //ADD NEW USER(S)
-                foreach (var u in SelectedUnassignedUsers)
-                {
-                    //If the user isn't assigned to this project
-                    if (!helper.HasProject(u, AddUserProjectID))
-                    {
-                        //Add the user to the project
-                        helper.AssignUser(u, AddUserProjectID);
-                    }
-                }
 
-                db.Entry(project).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if(SelectedUnassignedUsers != null)
+                {
+                    foreach (var u in SelectedUnassignedUsers)
+                    {
+                        //If the user isn't assigned to this project
+                        if (!helper.HasProject(u, AddUserProjectID))
+                        {
+                            //Add the user to the project
+                            helper.AssignUser(u, AddUserProjectID);
+                        }
+                    }
+
+                    db.Entry(project).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                
             }
 
-            return View(AddUserProjectID);
+            return RedirectToAction("Index");
         }
 
 
@@ -214,22 +182,67 @@ namespace Bug_tracker.Models.CodeFirst
                 var project = db.Projects.Find(RemoveUserProjectID);
 
                 //ADD NEW USER(S)
-                foreach (var u in SelectedAssignedUsers)
+
+
+                if(SelectedAssignedUsers != null)
                 {
-                    //If the user isn't assigned to this project
-                    if (helper.HasProject(u, RemoveUserProjectID))
+                    foreach (var u in SelectedAssignedUsers)
                     {
-                        //Add the user to the project
-                        helper.RemoveUser(u, RemoveUserProjectID);
+                        //If the user isn't assigned to this project
+                        if (helper.HasProject(u, RemoveUserProjectID))
+                        {
+                            //Add the user to the project
+                            helper.RemoveUser(u, RemoveUserProjectID);
+                        }
                     }
+
+                    db.Entry(project).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
-                db.Entry(project).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+             
             }
 
-            return View(RemoveUserProjectID);
-                }
+            return RedirectToAction("Index");
+        }
             }
         }
+
+
+
+
+//// GET: Projects/Delete/5
+//public ActionResult Delete(int? id)
+//{
+//    if (id == null)
+//    {
+//        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//    }
+//    Project project = db.Projects.Find(id);
+//    if (project == null)
+//    {
+//        return HttpNotFound();
+//    }
+//    return View(project);
+//}
+
+//// POST: Projects/Delete/5
+//[HttpPost, ActionName("Delete")]
+//[ValidateAntiForgeryToken]
+//public ActionResult DeleteConfirmed(int id)
+//{
+//    Project project = db.Projects.Find(id);
+//    db.Projects.Remove(project);
+//    db.SaveChanges();
+//    return RedirectToAction("Index");
+//}
+
+//protected override void Dispose(bool disposing)
+//{
+//    if (disposing)
+//    {
+//        db.Dispose();
+//    }
+//    base.Dispose(disposing);
+//}

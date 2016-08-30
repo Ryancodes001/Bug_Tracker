@@ -224,18 +224,23 @@ namespace BugTracker.Controllers
             ProjectsHelper projectHelper = new ProjectsHelper(db);
             UserRolesHelper rolesHelper = new UserRolesHelper(db);
             var userRoles = rolesHelper.ListUserRoles(user.Id);
-
+            Ticket ticket = db.Tickets.Find(id);
 
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = db.Tickets.Find(id);
+
             if (ticket == null)
             {
                 return HttpNotFound();
             }
+
+
+
+
+
             //This line specifies the users that are in the role of Developer- only developers can be assigned to a ticket
             ViewBag.AssignedToUserId = new SelectList(rolesHelper.UsersInRole("Developer"), "Id", "DisplayName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "DisplayName", ticket.OwnerUserId);
@@ -246,22 +251,23 @@ namespace BugTracker.Controllers
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "Name", ticket.TicketTypeId);
 
 
-          //if (userRoles.Contains("Project Manager"))
-          //  {
-          //      if (ticket.Project.ApplicationUsers.Contains(user))
-          //      {
-          //          return View();
-          //      }
-          //  }
-          //if (userRoles.Contains("Developer"))
-          //  {
-          //      if (ticket.AssignedToUserId == user.Id)
-          //      {
-          //          return View();
-          //      }
-          //  }
+            if (userRoles.Contains("Project Manager"))
+            {
+                if (ticket.Project.ApplicationUsers.Contains(user))
+                {
+                    return View(ticket);
+                }
+            }
 
-            return View(ticket);
+            if (userRoles.Contains("Developer"))
+            {
+                if (ticket.AssignedToUserId == user.Id)
+                {
+                    return View(ticket);
+                }
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
 
@@ -283,7 +289,7 @@ namespace BugTracker.Controllers
 
 
             //var ticketHistory = db.TicketHistory.Where(t => t.TicketId == ticket.Id).ToList();
-            //var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+            var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
 
             if (ModelState.IsValid)
             {
@@ -291,7 +297,7 @@ namespace BugTracker.Controllers
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
 
-                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                //var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
 
                 var newTicket = db.Tickets.Find(ticket.Id);
 

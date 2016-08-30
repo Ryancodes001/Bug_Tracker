@@ -4,7 +4,7 @@
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\rrous\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\Bug_tracker\\Bug_tracker\\obj\\Release\\Package\\PackageTmp$" />
     <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\rrous\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\Bug_tracker\\Bug_tracker\\obj\\Release\\Package\\PackageTmp$" />
   </parameter>
-  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=coderfoundry.cloudapp.net,55555;Initial Catalog=rrousseau-bugtracker;Integrated Security=False;User ID=rrousseau;Password=rrNewP@ss1;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True" tags="">
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." value="Data Source=coderfoundry.cloudapp.net,55555;Initial Catalog=rrousseau-bugtracker;Integrated Security=False;User ID=rrousseau;Password=rrNewP@ss1;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="C:\\Users\\rrous\\onedrive\\documents\\visual\ studio\ 2015\\Projects\\Bug_tracker\\Bug_tracker\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
 </parameters>

@@ -47,17 +47,30 @@ namespace Bug_tracker.Controllers
             {
                 UserRolesHelper helper = new UserRolesHelper(db);
                 var user = db.Users.Find(AddId);
-                foreach (var role in SelectedAbsentRoles)
+               
+
+                if (SelectedAbsentRoles != null)
                 {
-                    helper.AddUserToRole(AddId, role);
+                    foreach (var role in SelectedAbsentRoles)
+                        {
+                            helper.AddUserToRole(AddId, role);
+                        }
+
+                            db.Entry(user).State = EntityState.Modified;
+                            db.Users.Attach(user);
+                            db.SaveChanges();
+                            return RedirectToAction("AdminDashboard");
+                       }
+
+
+                else
+                {
+                    return RedirectToAction("AdminDashboard");
                 }
 
-                db.Entry(user).State = EntityState.Modified;
-                db.Users.Attach(user);
-                db.SaveChanges();
-                return RedirectToAction("AdminDashboard");
+              
             }
-            return View(AddId);
+            return RedirectToAction("AdminDashboard");
         }
 
         // POST: Remove User Role
@@ -69,17 +82,27 @@ namespace Bug_tracker.Controllers
             {
                 UserRolesHelper helper = new UserRolesHelper(db);
                 var user = db.Users.Find(RemoveId);
-                foreach (var role in SelectedCurrentRoles)
-                {
-                    helper.RemoveUserFromRole(RemoveId, role);
-                }
-                db.Entry(user).State = EntityState.Modified;
-                db.Users.Attach(user);
-                db.SaveChanges();
-                return RedirectToAction("AdminDashboard");
-            }
-            return View(RemoveId);
-        }
 
-    }
+                if (SelectedCurrentRoles != null)
+                {
+                    foreach (var role in SelectedCurrentRoles)
+                    {
+                        helper.RemoveUserFromRole(RemoveId, role);
+                    }
+                    db.Entry(user).State = EntityState.Modified;
+                    db.Users.Attach(user);
+                    db.SaveChanges();
+                    return RedirectToAction("AdminDashboard");
+                }
+                else
+                {
+                    return RedirectToAction("AdminDashboard");
+                }
+
+
+            }
+            return RedirectToAction("AdminDashboard");
+
+        }
+    } 
 }

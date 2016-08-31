@@ -24,7 +24,7 @@ textarea {
 }
 
 .resize {
-    height: auto;
+    height: 100%;
     width: 100%;
 
 }
@@ -62,7 +62,10 @@ textarea {
     width: 100%
 }
 .backColor{
-    background-color:darkgrey;
+   background-image: url("/img/log2.jpeg")
+}
+.backgroundColor{
+    background-color:;
 }
 
 html *{

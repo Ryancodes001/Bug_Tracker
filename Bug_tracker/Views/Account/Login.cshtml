@@ -3,13 +3,12 @@
 @{
     ViewBag.Title = "Log in";
 }
+<div class="jumbotron solidBorder">
+    <h2>Your journey starts here</h2>
+    <div class="row">
+        <div class="col-lg-6">
 
-<div class="jumbotron backgroundImage resize">
-<h2>Your journey starts here</h2>
-<div class="row">
-    <div class="col-lg-12">
-
-        <div class="panel panel-primary">
+            @*<div class="panel panel-primary">*@
             <div class="panel-heading">
             </div>
 
@@ -17,8 +16,8 @@
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                     @Html.AntiForgeryToken()
-                    <h4></h4>
-                    <hr />
+                    @*<h4></h4>
+                        <hr />*@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
@@ -61,12 +60,15 @@
             </section>
 
         </div>
-
-            </div>
-            <div class="panel-footer panel-success"></div>
+        <div class="col-lg-6">
+            <img src="~/img/log2.jpeg" class="resize solidBorder"/>
         </div>
-    </div>
-    @*<div class="col-md-6">
+        </div>
+</div>
+@*<div class="panel-footer panel-success"></div>
+    </div>*@
+@*</div>*@
+@*<div class="col-md-6">
         <img  src="~/img/log2.jpeg" class="resize solidBorder" />
     </div>*@
 

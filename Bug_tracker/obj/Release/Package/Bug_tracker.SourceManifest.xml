@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
+<<<<<<< HEAD
   <IisApp path="C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Package\PackageTmp" />
   <setAcl path="C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
   <setAcl path="C:\Users\rrous\OneDrive\Documents\Visual Studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+=======
+  <IisApp path="C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Package\PackageTmp" />
+  <setAcl path="C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\rrous\onedrive\documents\visual studio 2015\Projects\Bug_tracker\Bug_tracker\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+>>>>>>> refs/heads/newTemplate
 </sitemanifest>

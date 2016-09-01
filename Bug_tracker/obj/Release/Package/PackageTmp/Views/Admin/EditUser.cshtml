@@ -1,0 +1,58 @@
+﻿@model Bug_tracker.Models.AdminUserViewModel
+
+@{ 
+    ViewBag.Title = "Edit User Roles";
+}
+
+<h2>@Model.User.FirstName @Model.User.LastName </h2>
+<br/>
+
+@*I want to list the name of the Person I am assigning roles to here*@
+
+@*add form and styling*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Role(s) to User</h3>
+                </div>
+                <div class="panel-body">
+                   
+
+                    @using (Html.BeginForm("AddRole", "Admin"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@Model.User.Id" name="AddId" />
+                        @Html.ListBox("SelectedAbsentRoles", Model.AbsentRoles, htmlAttributes: new { @class = "form-control" })
+                        <br />
+                        <input type="submit" class="btn btn-succ" value="Add Role" name="AddRole" />
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Remove Role(s) from User</h3>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("RemoveRole", "Admin"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@Model.User.Id" name="RemoveId" />
+                        @Html.ListBox("SelectedCurrentRoles", Model.Roles, htmlAttributes: new { @class = "form-control" })
+                        <br />
+                        <input type="submit" class="btn btn-danger" value="Remove Role" name="RemoveRole" />
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -4,15 +4,20 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2 class="centerText">Edit Project</h2>
+
+
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Project</h4>
-        <hr />
+       
+      
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Created)
@@ -26,6 +31,12 @@
             </div>
         </div>
 
+<<<<<<< HEAD
+=======
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+>>>>>>> refs/heads/newTemplate
         @*<div class="form-group">
             @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -44,7 +55,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>

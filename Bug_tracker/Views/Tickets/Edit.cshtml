@@ -4,15 +4,27 @@
     ViewBag.Title = "Edit";
 }
 
+<<<<<<< HEAD
 <h2>Edit</h2>
 
+=======
+<h2 class="centerText">Edit Ticket</h2>
+
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+</div>
+>>>>>>> refs/heads/newTemplate
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+<<<<<<< HEAD
         <h4>Ticket</h4>
         <hr />
+=======
+      
+>>>>>>> refs/heads/newTemplate
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.OwnerUserId)
@@ -105,6 +117,12 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<<<<<<< HEAD
+=======
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+</div>
+>>>>>>> refs/heads/newTemplate
 
 @*<div class="form-group">
         @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })

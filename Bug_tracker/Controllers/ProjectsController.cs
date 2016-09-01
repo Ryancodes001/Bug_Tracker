@@ -51,7 +51,11 @@ namespace Bug_tracker.Models.CodeFirst
         }
 
         // GET: Projects/Create
+<<<<<<< HEAD
         [Authorize(Roles = "Admin, Project Manager")]
+=======
+        [Authorize(Roles = "Admin")]
+>>>>>>> refs/heads/newTemplate
         public ActionResult Create()
         {
             return View();

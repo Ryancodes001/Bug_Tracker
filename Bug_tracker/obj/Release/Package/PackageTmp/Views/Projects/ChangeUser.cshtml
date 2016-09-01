@@ -1,0 +1,51 @@
+﻿@model Bug_tracker.Models.ProjectUserViewModel
+
+@{
+    ViewBag.Title = "ChangeUser";
+}
+
+<h2>Change User</h2>
+
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Current Users assigned to project</h3>
+            </div>
+            <div class="panel-body">
+                <h3>Assigned</h3>
+                <br />
+                @using (Html.BeginForm("RemoveUser", "Projects"))
+
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" value="@Model.Project.Id" name="RemoveUserProjectID" />
+                    @Html.ListBox("SelectedAssignedUsers", Model.AssignedUserList, htmlAttributes: new { @class = "form-control" })
+                    <br />
+                        <input type="submit" class="btn btn-danger" value="Remove Selected User(s)" />
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Available Users to assign to project</h3>
+            </div>
+            <div class="panel-body">
+                <h3>Available</h3>
+                <br />
+                @using (Html.BeginForm("AddUser", "Projects"))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" value="@Model.Project.Id" name="AddUserProjectID" />
+                    @Html.ListBox("SelectedUnassignedUsers", Model.UnassignedUserList, htmlAttributes: new { @class = "form-control" })
+                    <br />
+                        <input type="submit" class="btn btn-success" value="Add Selected User(s)" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

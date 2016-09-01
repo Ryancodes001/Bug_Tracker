@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Bug_tracker.Models.CodeFirst.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ticket Index</h2>
+
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+</div>
+
+@if (User.IsInRole("Submitter"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-info btn-lg" })
+    </p>
+
+}
+
+
+<table class="table table-bordered myTable">
+    <thead>
+        <tr>
+
+            <th>
+                Owner
+            </th>
+            <th>
+                Project Title
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Ticket Type
+            </th>
+            <th>
+                Ticket Title
+            </th>
+
+            <th>
+                Created
+            </th>
+            <th>
+                Updated
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Title)
+                    @* set up link on title to go to details page *@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+
+
+<div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+</div>

@@ -1,5 +1,6 @@
 ﻿@model Bug_tracker.Models.LoginViewModel
 
+<<<<<<< HEAD
 @{
     Layout = null;
 }
@@ -28,12 +29,26 @@
 
 <body class="bodySize">
     <div class="container body-content">
+=======
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    @* jQuery data tables Css here *@
+    @*<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />*@
+
+    @*<link href="~/Content/Slatebootsrap.css" rel="stylesheet">*@
+
+
+
+
+
+>>>>>>> refs/heads/newTemplate
 
         <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width: 100%"></div>
         </div>
 
         <div class="jumbotron">
+<<<<<<< HEAD
             <h1 class="centerContent centerText borderBottom">Bug Tracker</h1>
             <br/>
            
@@ -365,6 +380,311 @@
     <div class="progress progress-striped active">
         <div class="progress-bar progress-bar-success" style="width: 100%"></div>
     </div>
+=======
+    <h1 class="centerContent centerText borderBottom">Bug Tracker</h1>
+    <br />
+
+
+
+    <div class="row">
+
+
+        <div class="col-md-6 ">
+            <div class="panel panel-success">
+                <div class="panel-heading"><h3>Click the tracks to start tracking!</h3></div>
+                <div class="panel-body">
+                    <a href="/Account/Login"> <img class="resize" src="~/img/traintracks.jpg" /></a>
+
+                </div>
+                <div class="panel-footer "></div>
+            </div>
+        </div>
+
+        <div class="col-md-6 ">
+
+
+
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3>Welcome!</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="centerText">
+                        Welcome to my Bug Tracking application! Here you will find methods for submitting, updating, and tracking issues or "bugs" in a real world application! Please feel free to navigate the site through the
+                        use of several demo logins, each representing the different roles of the platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+            </div>
+                 
+            <hr />
+            <footer>
+                <p class="centerText">&copy; - A <a href="https://rrousseau-portfolio.azurewebsites.net/">Ryan Rousseau</a> Production</p>
+            </footer>
+       
+
+
+
+        @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+        @*@RenderSection("scripts", required: false)*@
+
+        @* jQuery data tables here *@
+        @*<script type="text/javascript" src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+
+
+       <script type="text/javascript" src="~/Scripts/datatables.js"></script>
+
+        <script type="text/javascript" src="~/Scripts/DataTables/dataTables.bootstrap.js"></script>*@
+
+
+ 
+
+@*<div class="col-md-4 ">*@
+
+
+
+
+@*<div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title"></h3>
+        </div>
+        <div class="panel-body">
+            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-primary" }) |
+            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+@*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Admin", "AdminDashboard", "Admin")</li>
+
+                    }
+
+                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>*@
+
+
+
+@*<div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title"></h3>
+        </div>
+        <div class="panel-body">
+            <div class="btn-group btn-group-lg">
+                <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Click here to access different roles!</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <div class="well-sm">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <input type="hidden" name="Email" value="developer@developer.com">
+                                <input type="hidden" name="Password" value="Demo1&#64">
+                                <input type="submit" value="Developer-Frank Reynolds" class="btn btn-info btn-lg" />
+                            }
+                        </div>
+                    </li>
+                    <li>
+                        <div class="well-sm">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <input type="hidden" name="Email" value="pm@pm.com">
+                                <input type="hidden" name="Password" value="Demo2&#64">
+                                <input type="submit" value="Project-Charlie Kelly" class="btn btn-primary btn-lg" />
+                            }
+                        </div>
+                    </li>
+                    <li>
+                        <div class="well-sm">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <input type="hidden" name="Email" value="submitter@submitter.com">
+                                <input type="hidden" name="Password" value="Demo3&#64">
+                                <input type="submit" value="Submitter-Mac" class="btn btn-warning btn-lg" />
+                            }
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+        <div class="panel-footer panel-success"></div>
+    </div>*@
+@*</div>*@
+
+
+
+
+
+
+
+
+@*<div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4>Check out the app as a Developer</h4>
+                </div>
+                <div class="panel-body">
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="developer@developer.com">
+                        <input type="hidden" name="Password" value="Demo1&#64">
+                        <input type="submit" value="Developer-Frank Reynolds" class="btn btn-info btn-lg" />
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Check out the app as a Project Manager</h4>
+                </div>
+                <div class="panel-body">
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="pm@pm.com">
+                        <input type="hidden" name="Password" value="Demo2&#64">
+                        <input type="submit" value="Project-Charlie Kelly" class="btn btn-primary btn-lg" />
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h4>Check out the app as a Submitter</h4>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="submitter@submitter.com">
+                        <input type="hidden" name="Password" value="Demo3&#64">
+                        <input type="submit" value="Submitter-Mac" class="btn btn-warning btn-lg" />
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>*@
+
+
+@*THis is the code that I have before I start messing with the buttons*@
+
+@*<div class="btn-group-lg">
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Click here to access different roles in this application!</a>
+
+
+        <ul class="dropdown-menu">
+            <li>
+                <div class="well-sm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="developer@developer.com">
+                        <input type="hidden" name="Password" value="Demo1&#64">
+                        <input type="submit" value="Developer-Frank Reynolds" class="btn btn-info btn-lg" />
+                    }
+                </div>
+            </li>
+
+
+            <li>
+                <div class="well-sm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="pm@pm.com">
+                        <input type="hidden" name="Password" value="Demo2&#64">
+                        <input type="submit" value="Project-Charlie Kelly" class="btn btn-primary btn-lg" />
+                    }
+                </div>
+            </li>
+            <li>
+                <div class="well-sm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="Email" value="submitter@submitter.com">
+                        <input type="hidden" name="Password" value="Demo3&#64">
+                        <input type="submit" value="Submitter-Mac" class="btn btn-warning btn-lg" />
+                    }
+                </div>
+            </li>
+
+        </ul>
+    </div>*@
+
+
+
+@* this is the site with three columns and the layout being referenced *@
+
+@*@model Bug_tracker.Models.LoginViewModel
+
+
+    @{
+        ViewBag.Title = "Home Page";
+    }
+
+
+
+    <div class="progress progress-striped active">
+        <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+    </div>
+>>>>>>> refs/heads/newTemplate
     <div class="jumbotron">
         <h1>Bug Tracker</h1>
     </div>

@@ -8,7 +8,11 @@
 <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" style="width: 100%"></div>
 </div>
+<<<<<<< HEAD
 <table class="table table-bordered myTable">
+=======
+<table class="table table-striped table-bordered table-hover myTable">
+>>>>>>> refs/heads/newTemplate
     <thead>
         <tr>
             <th>
@@ -31,6 +35,7 @@
         </tr>
     </thead>
     <tbody>
+<<<<<<< HEAD
     @foreach (var item in Model)
     {
 
@@ -78,6 +83,55 @@
 </table>
 
 @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+=======
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @foreach (var u in item.ApplicationUsers)
+                {
+                        @u.DisplayName <br />
+                    }
+                </td>
+                <td>
+                    @foreach (var t in item.Tickets)
+                    {
+                        @Html.ActionLink(t.Title, "Details", "Tickets", new { id = t.Id }, htmlAttributes: new { @class = "text-color: Green;" }) <br />
+                    }
+                </td>
+
+
+                <td>
+                    @if (User.IsInRole("Admin"))
+                {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-success btn-sm" })
+                    }
+
+                    @if (User.IsInRole("Project Manager") || (User.IsInRole("Admin")))
+                {
+                        @Html.ActionLink("Change User", "ChangeUser", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-success btn-sm" })
+                    }
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@if (User.IsInRole("Admin"))
+>>>>>>> refs/heads/newTemplate
 {
     <p>
         @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary btn-lg" })

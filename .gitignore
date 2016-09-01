@@ -46,6 +46,12 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+<<<<<<< HEAD
 Bug_tracker/Private.Config
 Bug_tracker/obj
 Bug_tracker/PackageTmp
+=======
+
+Bug_tracker/private.config
+
+>>>>>>> refs/heads/newTemplate

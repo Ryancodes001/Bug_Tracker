@@ -3,123 +3,113 @@
 @{
     ViewBag.Title = "Log in";
 }
+<div class="jumbotron solidBorder">
+    <h2>Your journey starts here</h2>
+    <div class="row">
+        <div class="col-lg-6">
 
-<h2>Your journey starts here</h2>
-<div class="row">
-    <div class="col-md-6">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4></h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-success btn-lg" />
-                        
-                            @Html.ActionLink("Register as a new user", "Register", null, htmlAttributes: new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword", null, htmlAttributes: new { @class = "btn btn-danger" })
-                        </div>
-                </div>
-                
-
-
-                @*@Html.ActionLink("Back to List", "Index", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })*@
-
-                //Enable this once you have account confirmation enabled for password reset functionality
-                    <br/>
-            }
-        </section>
-        <div class="panel panel-primary">
+            @*<div class="panel panel-primary">*@
             <div class="panel-heading">
-                <h3 class="panel-title">Or choose to surf the site as one of the demo roles below!</h3>
             </div>
-            <div class="panel-body">
-                @*<div class="btn-group btn-group-lg">*@
-                    @*<a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Click here to access different roles!</a>
-                    <ul class="dropdown-menu">*@
-                        
-                            
 
-                <div class="well-sm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <input type="hidden" name="Email" value="Submitter@submitter.com">
-                        <input type="hidden" name="Password" value="Demo!3">
-                        <input type="submit" value="Submitter-Prof. Moriarty" class="btn btn-success btn-lg" />
-                    }
-                </div>
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    @*<h4></h4>
+                        <hr />*@
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Log in" class="btn btn-success btn-lg" />
 
-
-                <div class="well-sm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <input type="hidden" name="Email" value="ProjectManager@projectmanager.com">
-                        <input type="hidden" name="Password" value="Demo!2">
-                        <input type="submit" value="Project Manager-Dr. Watson" class="btn btn-success btn-lg" />
-                    }
-                </div>
-
-                <div class="well-sm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <input type="hidden" name="Email" value="Developer@developer.com">
-                        <input type="hidden" name="Password" value="Demo!1">
-                        <input type="submit" value="Developer-Sherlock Holmes" class="btn btn-success btn-lg" />
-                    }
-                </div>
+                            @Html.ActionLink("Register as a new user", "Register", null, htmlAttributes: new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Forgot your password?", "ForgotPassword", null, htmlAttributes: new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
 
 
 
-     
-                        
+                    @*@Html.ActionLink("Back to List", "Index", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })*@
 
-                    @*</ul>*@
-                @*</div>*@
+                    //Enable this once you have account confirmation enabled for password reset functionality
+                    <br />
+                }
+            </section>
 
-            </div>
-            <div class="panel-footer panel-success"></div>
         </div>
-    </div>
-    <div class="col-md-6">
-        
-
-
-        
-        <img  src="~/img/log2.jpeg" class="resize solidBorder" />
-
-    </div>
+        <div class="col-lg-6">
+            <img src="~/img/log2.jpeg" class="resize solidBorder"/>
+        </div>
+        </div>
 </div>
+@*<div class="panel-footer panel-success"></div>
+    </div>*@
+@*</div>*@
+@*<div class="col-md-6">
+        <img  src="~/img/log2.jpeg" class="resize solidBorder" />
+    </div>*@
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+
+}@*<div class="panel-body">
+
+
+
+    <div class="well-sm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input type="hidden" name="Email" value="Submitter@submitter.com">
+            <input type="hidden" name="Password" value="Demo!3">
+            <input type="submit" value="Submitter-Prof. Moriarty" class="btn btn-success btn-lg" />
+        }
+    </div>
+
+
+    <div class="well-sm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input type="hidden" name="Email" value="ProjectManager@projectmanager.com">
+            <input type="hidden" name="Password" value="Demo!2">
+            <input type="submit" value="Project Manager-Dr. Watson" class="btn btn-success btn-lg" />
+        }
+    </div>
+
+    <div class="well-sm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input type="hidden" name="Email" value="Developer@developer.com">
+            <input type="hidden" name="Password" value="Demo!1">
+            <input type="submit" value="Developer-Sherlock Holmes" class="btn btn-success btn-lg" />
+        }
+    </div>*@

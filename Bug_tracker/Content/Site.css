@@ -24,7 +24,7 @@ textarea {
 }
 
 .resize {
-    height: 100%;
+    height: auto;
     width: 100%;
 
 }
@@ -60,21 +60,4 @@ textarea {
     border-bottom:solid;
     border-color:slategray;
     width: 100%
-}
-.backColor{
-   background-image: url("/img/log2.jpeg")
-}
-.backgroundColor{
-    background-color:;
-}
-
-html *{
-    font-family:'Cambria Math'
-}
-
-.backgroundImage{
-    background-image: url("/img/log2.jpeg")
-                        
-            
-    
 }
